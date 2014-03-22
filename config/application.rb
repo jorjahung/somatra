@@ -29,3 +29,4 @@ module Somatra
   end
 end
 require 'blood_probe'
+require 'httparty'

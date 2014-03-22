@@ -34,7 +34,13 @@ class BloodTestsController < ApplicationController
     redirect_to blood_tests_path
   end
 
-  def index
+
+
+  def index 
+    legend = HTTParty.get('http://localhost:3000/blood-tests/legend')
+    @headers = legend.map { |property_name, values| values["name"] }
+    @units = legend.map { |property_name, values| values["unit"] }
+
     @blood_tests = BloodTest.order('taken_on DESC')
     respond_to do |format|
       format.html

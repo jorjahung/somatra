@@ -1,37 +1,7 @@
 require 'blood_probe'
 
 module BloodTestsHelper
-  def headers
-    ["Taken on",
-      "Hb",
-      "MCV",
-      "WBC",
-      "Platelets",
-      "Neutrophils",
-      "Lymphocytes",
-      "ALT",
-      "Alk Phos",
-      "Creatinine",
-      "ESR",
-      "CRP"
-    ]
-  end
 
-  def units
-    [
-      BloodProbe::HEMOGLOBIN_UNIT,          
-      BloodProbe::MEAN_CELL_VOLUME_UNIT,   
-      BloodProbe::WHITE_BLOOD_CELLS_UNIT,             
-      BloodProbe::PLATELETS_UNIT,                     
-      BloodProbe::NEUTROPHILS_UNIT,                   
-      BloodProbe::LYMPHOCYTES_UNIT,                   
-      BloodProbe::ALANINE_AMINOTRANSFERASE_UNIT,
-      BloodProbe::ALKALINE_PHOSPHATASE_UNIT,
-      BloodProbe::CREATININE_UNIT,             
-      BloodProbe::ERYTHROCYTE_SEDIMENTATION_RATE_UNIT,
-      BloodProbe::C_REACTIVE_PROTEIN_UNIT
-    ]    
-  end
 
   def methods
     ["hb",
