@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Soma::Application.config.secret_key_base = '74f016d8f0abb022119c75ee2a614a4e2cb9c7828a7aabfa277d82cf4279f56e9260f70466e9254b3a87b48ea0b302182b68a7e2f916d202308301aa2f89d8bb'
+Somatra::Application.config.secret_key_base = '74f016d8f0abb022119c75ee2a614a4e2cb9c7828a7aabfa277d82cf4279f56e9260f70466e9254b3a87b48ea0b302182b68a7e2f916d202308301aa2f89d8bb'

@@ -1,37 +1,5 @@
-require 'blood_probe'
-
 module BloodTestsHelper
-  def headers
-    ["Taken on",
-      "Hb",
-      "MCV",
-      "WBC",
-      "Platelets",
-      "Neutrophils",
-      "Lymphocytes",
-      "ALT",
-      "Alk Phos",
-      "Creatinine",
-      "ESR",
-      "CRP"
-    ]
-  end
 
-  def units
-    [
-      BloodProbe::HEMOGLOBIN_UNIT,          
-      BloodProbe::MEAN_CELL_VOLUME_UNIT,   
-      BloodProbe::WHITE_BLOOD_CELLS_UNIT,             
-      BloodProbe::PLATELETS_UNIT,                     
-      BloodProbe::NEUTROPHILS_UNIT,                   
-      BloodProbe::LYMPHOCYTES_UNIT,                   
-      BloodProbe::ALANINE_AMINOTRANSFERASE_UNIT,
-      BloodProbe::ALKALINE_PHOSPHATASE_UNIT,
-      BloodProbe::CREATININE_UNIT,             
-      BloodProbe::ERYTHROCYTE_SEDIMENTATION_RATE_UNIT,
-      BloodProbe::C_REACTIVE_PROTEIN_UNIT
-    ]    
-  end
 
   def methods
     ["hb",
@@ -48,21 +16,30 @@ module BloodTestsHelper
     ]
   end
 
-  def class_for(test, method)
-    return "class=empty-value" if has_empty_value?(test, method)
-    probe = BloodProbe.new(test)
-    if probe.within_range? method.to_sym
+  def class_for(blood_test, method)
+    return "class=empty-value" if has_empty_value?(blood_test, method)
+    if within_range?(blood_test, method)
       "class=no-danger"
     else
       "class=danger"
     end
   end
 
-  def value_for(test, method)
-    test.send("#{method}".to_sym)
+  def within_range?(blood_test, method)
+    if method == 'crp'
+      return true if blood_test['crp'] =~ /^<(?:5|4|3|2|1)$/
+      return @ranges[method].include? value_for(blood_test, method) if blood_test['crp'] =~ /^\d+$/
+      return false
+    else
+      @ranges[method].include? value_for(blood_test, method)
+    end
   end
 
-  def has_empty_value?(test,method)
-    value_for(test, method).nil? || value_for(test, method) == ''
+  def value_for(blood_test, method)
+    blood_test[method]
+  end
+
+  def has_empty_value?(blood_test, method)
+    value_for(blood_test, method).nil? || value_for(blood_test, method) == ''
   end
 end

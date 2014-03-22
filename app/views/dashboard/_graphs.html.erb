@@ -1,8 +1,6 @@
 <script type="text/javascript">
-request = new XMLHttpRequest();
-request.open('GET', "/blood-tests/results/<%=blood_name%>", false);
-request.send(null);
-var data = JSON.parse(request.responseText);
+
+var data = <%= @blood_tests[blood_name].html_safe %>;
 
 // Set the dimensions of the canvas / graph
 var margin = {
