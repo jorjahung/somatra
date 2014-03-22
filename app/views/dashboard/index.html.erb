@@ -3,14 +3,13 @@
 
 <div id="tabs" class="main-content">
   <ul>
-  <% blood_name_and_ranges.each_pair do |key, value| %>
-    <li><a href="#<%= key %>"><%= key %></a></li>
+  <% @headers.each_with_index do |header, i| %>
+    <li><a href="#<%= @methods[i] %>"><%= header %></a></li>
   <% end %>
   </ul>
-  <% blood_name_and_ranges.each_pair do |key, value| %>
-    <div id="<%= key %>">
-      <p><%= render "graphs", blood_name: key, blood_range: value %></p>
+  <% @methods.each do |method| %>
+    <div id="<%= method %>">
+      <p><%= render "graphs", blood_name: method, blood_range: @ranges[method] %></p>
     </div>
   <% end %>
 </div>
-

@@ -1,5 +1,3 @@
-require 'blood_probe'
-
 module BloodTestsHelper
 
 
