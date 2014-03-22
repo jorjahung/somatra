@@ -1,0 +1,151 @@
+<script type="text/javascript">
+request = new XMLHttpRequest();
+request.open('GET', "/blood-tests/results/<%=blood_name%>", false);
+request.send(null);
+var data = JSON.parse(request.responseText);
+
+// Set the dimensions of the canvas / graph
+var margin = {
+    top: 20,
+    right: 50,
+    bottom: 30,
+    left: 50
+},
+width = 600 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+
+// Parse the date / time
+var parseDate = d3.time.format("%Y-%m-%d").parse;
+
+
+// Set the ranges
+var x = d3.time.scale()
+    .range([0, width]);
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+// Define the axes
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom")
+    .ticks(data.length);
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+// Define the value line path generator
+var line = d3.svg.line()
+    .x(function (d) {
+    return x(d.date);
+})
+    .y(function (d) {
+    return y(d.result);
+});
+
+// Define the area path generator
+var area = d3.svg.area()
+    .x(function (d) {
+    return x(d.date);
+})
+    .y0(function (d) {
+    return y(d.min);
+})
+    .y1(function (d) {
+    return y(d.max);
+});
+
+// Adds the svg canvas
+var svg = d3.select("#<%= blood_name %>").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .attr("class", "<%= blood_name %>")
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var maxLimit = <%= blood_range.last %>;
+var minLimit = <%= blood_range.first %>;
+
+
+data.forEach(function (d) {
+    d.date = parseDate(d.date);
+    d.result = +d.result;
+    d.min = minLimit;
+    d.max = maxLimit;
+
+});
+
+// Scale the range of the data
+x.domain([data[0].date, data[data.length - 1].date]);
+y.domain([d3.min(data, function (d) {
+    if (d.result-2 > minLimit-2) {
+        return minLimit - 2;
+        }
+    else {
+        return d.result - 2;
+    };
+}), d3.max(data, function (d) {
+    if (d.result+2 < maxLimit) {
+        return maxLimit + 2;
+        }
+    else {
+        return d.result + 2;
+    };
+})]);
+
+// Add the background area showing the historic range
+svg.append("path")
+    .datum(data)
+    .attr("class", "safe")
+    .attr("d", area);
+
+// Add the value line
+svg.append("path")
+    .datum(data)
+    .attr("class", "dataline")
+    .attr("d", line);
+
+// Add the X Axis
+svg.append("g") // Add the X Axis
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis);
+
+
+// Add the Y Axis
+svg.append("g") 
+    .attr("class", "y axis")
+    .call(yAxis);
+
+// Points in line
+var formatTime = d3.time.format("%e %B %Y");
+
+var div = d3.select("body").append("div")   
+    .attr("class", "tooltip")               
+    .style("opacity", 0);
+
+svg.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("svg:circle")
+    .attr("r", 4)
+    .attr("cx", function(d) { return x(d.date) })
+    .attr("cy", function(d) { return y(d.result) })
+    .attr("fill", "red")
+    .on("mouseover", function(d) {      
+            div.transition()        
+                .duration(200)      
+                .style("opacity", .9);      
+            div .html(formatTime(d.date) + "<br/>"  + d.result)  
+                .style("left", (d3.event.pageX +10) + "px")     
+                .style("top", (d3.event.pageY + 10) + "px");    
+            })                  
+        .on("mouseout", function(d) {       
+            div.transition()        
+                .duration(500)      
+                .style("opacity", 0);   
+        });
+
+
+</script>
+
