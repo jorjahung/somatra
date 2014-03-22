@@ -37,11 +37,15 @@ class BloodTestsController < ApplicationController
 
 
   def index 
-    legend = HTTParty.get('http://localhost:3000/blood-tests/legend')
-    @headers = legend.map { |property_name, values| values["name"] }
-    @units = legend.map { |property_name, values| values["unit"] }
+    @legend = HTTParty.get('http://localhost:3000/blood-tests/legend')
+    @headers = @legend.map { |property_name, values| values["name"] }
+    @units =   @legend.map { |property_name, values| values["unit"] }
+    @methods = @legend.map { |property_name, values| property_name  }
+    @ranges =  @legend.inject({}) do |hash, (property_name, values)| 
+      hash.merge({ property_name => (values['max'] .. values['min']) })
+    end
 
-    @blood_tests = BloodTest.order('taken_on DESC')
+    @blood_tests = HTTParty.get('http://localhost:3000/blood-tests.json')
     respond_to do |format|
       format.html
       format.json { render json: @blood_tests.to_json }
