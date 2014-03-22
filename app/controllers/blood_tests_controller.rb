@@ -83,7 +83,7 @@ class BloodTestsController < ApplicationController
 
   def set_ranges
     @ranges =  @legend.inject({}) do |hash, (property_name, values)| 
-      hash.merge({ property_name => (values['max'] .. values['min']) })
+      hash.merge({ property_name => (values['min'] .. values['max']) })
     end
   end
 
