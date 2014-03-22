@@ -1,4 +1,7 @@
 class BloodTestsController < ApplicationController
+  include HTTParty
+  base_uri 'http://localhost:3000/blood-tests'
+
   def new
     @blood_test = BloodTest.new
   end
@@ -34,22 +37,9 @@ class BloodTestsController < ApplicationController
     redirect_to blood_tests_path
   end
 
-
-
   def index 
-    @legend = HTTParty.get('http://localhost:3000/blood-tests/legend')
-    @headers = @legend.map { |property_name, values| values["name"] }
-    @units =   @legend.map { |property_name, values| values["unit"] }
-    @methods = @legend.map { |property_name, values| property_name  }
-    @ranges =  @legend.inject({}) do |hash, (property_name, values)| 
-      hash.merge({ property_name => (values['max'] .. values['min']) })
-    end
-
-    @blood_tests = HTTParty.get('http://localhost:3000/blood-tests.json')
-    respond_to do |format|
-      format.html
-      format.json { render json: @blood_tests.to_json }
-    end
+    prepare_blood_test_table
+    @blood_tests = self.class.get('.json')
   end
 
   def results
@@ -77,5 +67,31 @@ class BloodTestsController < ApplicationController
       :esr,
       :crp
       )
+  end
+
+  def set_headers
+    @headers = @legend.map { |property_name, values| values["name"] }
+  end
+
+  def set_units
+    @units = @legend.map { |property_name, values| values["unit"] }
+  end
+
+  def set_methods
+    @methods = @legend.map { |property_name, values| property_name }
+  end
+
+  def set_ranges
+    @ranges =  @legend.inject({}) do |hash, (property_name, values)| 
+      hash.merge({ property_name => (values['max'] .. values['min']) })
+    end
+  end
+
+  def prepare_blood_test_table
+    @legend = self.class.get("/legend")
+    set_headers
+    set_units
+    set_methods
+    set_ranges
   end
 end
