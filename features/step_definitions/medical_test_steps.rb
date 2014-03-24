@@ -15,6 +15,23 @@ Given(/^I am on the legend page$/) do
 end
 
 When(/^I enter the results$/) do
+  expect(BloodTestsController).to receive(:post).with( "/remote", {:body=>{"utf8"=>"✓", "blood_test"=>{"taken_on"=>"01/01/2014", "hb"=>"13", "mcv"=>"88", "wbc"=>"7.0", "platelets"=>"278", "neutrophils"=>"4.4", "lymphocytes"=>"2.2", "alt"=>"103", "alk_phos"=>"67", "creatinine"=>"50", "esr"=>"9", "crp"=>"<5"}, "commit"=>"submit", "controller"=>"blood_tests", "action"=>"create"}}).and_return({'id' =>  1})
+    stub_request(:get, "http://localhost:3000/blood-tests/legend").
+        to_return(:status => 200, :body => '{"hb":{"name":"Hb","fullname":"Haemoglobin","unit":"g/L","min":11.5,"max":16},"mcv":{"name":"MCV","fullname":"Mean Cell Volume","unit":"fL","min":80,"max":100},"wbc":{"name":"WBC","fullname":"White Blood Cells","unit":"x10\u003Csup\u003E9\u003C/sup\u003E/L","min":4,"max":11},"platelets":{"name":"Platelets","fullname":"Platelets","unit":"x10\u003Csup\u003E9\u003C/sup\u003E/L","min":140,"max":440},"neutrophils":{"name":"Neutrophils","fullname":"Neutrophils","unit":"x10\u003Csup\u003E9\u003C/sup\u003E/L","min":2.5,"max":7.5},"lymphocytes":{"name":"Lymphocytes","fullname":"Lymphocytes","unit":"x10\u003Csup\u003E9\u003C/sup\u003E/L","min":1.0,"max":4.8},"alt":{"name":"ALT","fullname":"Alanine Aminotransferase","unit":"µkat/L","min":10,"max":40},"alk_phos":{"name":"Alk Phos","fullname":"Alkaline Phosphates","unit":"U/L","min":44,"max":147},"creatinine":{"name":"Creatinine","fullname":"Creatinine","unit":"μmol/L","min":50,"max":98},"esr":{"name":"ESR","fullname":"Erythrocyte Sedimentation Rate","unit":"mm/hr","min":0,"max":26},"crp":{"name":"CRP","fullname":"C Reactive Protein","unit":"mg/L","min":0,"max":5}}
+', :headers => {})
+expect(BloodTestsController).to receive(:get).with( "/legend").and_return({"hb" => {"name" => "Hb","fullname" => "Haemoglobin","unit" => "g/L","min" => 11.5,"max" => 16},"mcv" => {"name" => "MCV","fullname" => "Mean Cell Volume","unit" => "fL","min" => 80,"max" => 100},"wbc" => {"name" => "WBC","fullname" => "White Blood Cells","unit" => "x10\u003Csup\u003E9\u003C/sup\u003E/L","min" => 4,"max" => 11},"platelets" => {"name" => "Platelets","fullname" => "Platelets","unit" => "x10\u003Csup\u003E9\u003C/sup\u003E/L","min" => 140,"max" => 440},"neutrophils" => {"name" => "Neutrophils","fullname" => "Neutrophils","unit" => "x10\u003Csup\u003E9\u003C/sup\u003E/L","min" => 2.5,"max" => 7.5},"lymphocytes" => {"name" => "Lymphocytes","fullname" => "Lymphocytes","unit" => "x10\u003Csup\u003E9\u003C/sup\u003E/L","min" => 1.0,"max" => 4.8},"alt" => {"name" => "ALT","fullname" => "Alanine Aminotransferase","unit" => "µkat/L","min" => 10,"max" => 40},"alk_phos" => {"name" => "Alk Phos","fullname" => "Alkaline Phosphates","unit" => "U/L","min" => 44,"max" => 147},"creatinine" => {"name" => "Creatinine","fullname" => "Creatinine","unit" => "μmol/L","min" => 50,"max" => 98},"esr" => {"name" => "ESR","fullname" => "Erythrocyte Sedimentation Rate","unit" => "mm/hr","min" => 0,"max" => 26},"crp" => {"name" => "CRP","fullname" => "C Reactive Protein","unit" => "mg/L","min" => 0,"max" => 5}})
+expect(BloodTestsController).to receive(:get).with( "/1.json").and_return({"taken_on"=>"01/01/2014", 
+  "hb" => 13, 
+  "mcv" => 88, 
+  "wbc" => 7.0, 
+  "platelets" => 278, 
+  "neutrophils" => 4.4, 
+  "lymphocytes" => 2.2, 
+  "alt" => 103, 
+  "alk_phos" => 67, 
+  "creatinine" => 50, 
+  "esr" => 9, 
+  "crp" => "<5"})
   visit new_blood_test_path
   fill_in 'blood_test[taken_on]', with: '01/01/2014'
   fill_in 'blood_test[hb]', with: '13'            # In range
@@ -32,6 +49,20 @@ When(/^I enter the results$/) do
 end
 
 When(/^I (?:enter|have entered) a set of results(?:| that includes an empty value)$/) do
+  expect(BloodTestsController).to receive(:post).with( "/remote", {:body=>{"utf8"=>"✓", "blood_test"=>{"taken_on"=>"01/01/2014", "hb"=>"13", "mcv"=>"88", "wbc"=>"7.0", "platelets"=>"278", "neutrophils"=>"4.4", "lymphocytes"=>"2.2", "alt"=>"", "alk_phos"=>"67", "creatinine"=>"50", "esr"=>"9", "crp"=>"<5"}, "commit"=>"submit", "controller"=>"blood_tests", "action"=>"create"}}).and_return({'id' =>  1})
+  expect(BloodTestsController).to receive(:get).with( "/legend").and_return({"hb" => {"name" => "Hb","fullname" => "Haemoglobin","unit" => "g/L","min" => 11.5,"max" => 16},"mcv" => {"name" => "MCV","fullname" => "Mean Cell Volume","unit" => "fL","min" => 80,"max" => 100},"wbc" => {"name" => "WBC","fullname" => "White Blood Cells","unit" => "x10\u003Csup\u003E9\u003C/sup\u003E/L","min" => 4,"max" => 11},"platelets" => {"name" => "Platelets","fullname" => "Platelets","unit" => "x10\u003Csup\u003E9\u003C/sup\u003E/L","min" => 140,"max" => 440},"neutrophils" => {"name" => "Neutrophils","fullname" => "Neutrophils","unit" => "x10\u003Csup\u003E9\u003C/sup\u003E/L","min" => 2.5,"max" => 7.5},"lymphocytes" => {"name" => "Lymphocytes","fullname" => "Lymphocytes","unit" => "x10\u003Csup\u003E9\u003C/sup\u003E/L","min" => 1.0,"max" => 4.8},"alt" => {"name" => "ALT","fullname" => "Alanine Aminotransferase","unit" => "µkat/L","min" => 10,"max" => 40},"alk_phos" => {"name" => "Alk Phos","fullname" => "Alkaline Phosphates","unit" => "U/L","min" => 44,"max" => 147},"creatinine" => {"name" => "Creatinine","fullname" => "Creatinine","unit" => "μmol/L","min" => 50,"max" => 98},"esr" => {"name" => "ESR","fullname" => "Erythrocyte Sedimentation Rate","unit" => "mm/hr","min" => 0,"max" => 26},"crp" => {"name" => "CRP","fullname" => "C Reactive Protein","unit" => "mg/L","min" => 0,"max" => 5}})
+  expect(BloodTestsController).to receive(:get).with( "/1.json").and_return({"taken_on"=>"01/01/2014", 
+    "hb" => 13, 
+    "mcv" => 88, 
+    "wbc" => 7.0, 
+    "platelets" => 278, 
+    "neutrophils" => 4.4, 
+    "lymphocytes" => 2.2, 
+    "alt" => "", 
+    "alk_phos" => 67, 
+    "creatinine" => 50, 
+    "esr" => 9, 
+    "crp" => "<5"})
   visit new_blood_test_path
   fill_in 'blood_test[taken_on]', with: '01/01/2014'
   fill_in 'blood_test[hb]', with: '13'
@@ -40,8 +71,8 @@ When(/^I (?:enter|have entered) a set of results(?:| that includes an empty valu
   fill_in 'blood_test[platelets]', with: '278'
   fill_in 'blood_test[neutrophils]', with: '4.4'
   fill_in 'blood_test[lymphocytes]', with: '2.2'
-  fill_in 'blood_test[alt]', with: '103'
-  fill_in 'blood_test[alk_phos]', with: ''
+  fill_in 'blood_test[alt]', with: ''
+  fill_in 'blood_test[alk_phos]', with: '67'
   fill_in 'blood_test[creatinine]', with: '50'
   fill_in 'blood_test[esr]', with: '9'
   fill_in 'blood_test[crp]', with: '<5'
@@ -92,7 +123,7 @@ Given(/^I have submitted more than one set of results$/) do
   enter_blood('01/01/2014')
 end
 
-When(/^I am on the blood test results page$/) do
+When(/^I am on the blood test results page$/) do 
   visit blood_tests_path
 end
 
@@ -149,7 +180,7 @@ Then(/^I should see "(.*?)"$/) do |message|
 end
 
 Then(/^I should see my results grouped according to whether or not they are in range$/) do
-  expect(current_path).to eq(blood_test_path(BloodTest.find_by_hb(13)))
+  expect(current_path).to eq(blood_test_path(1))
   expect(page).to have_css('.danger', text: '103')
   expect(page).to have_css('.no-danger', text: '13')
 end
@@ -163,6 +194,20 @@ Then(/^I should not see the empty result in the report$/) do
 end
 
 def enter_blood(date)
+expect(BloodTestsController).to receive(:post).with("/remote", {:body=>{"utf8"=>"✓", "blood_test"=>{"taken_on"=>date, "hb"=>"13", "mcv"=>"88", "wbc"=>"7.0", "platelets"=>"278", "neutrophils"=>"4.4", "lymphocytes"=>"2.2", "alt"=>"103", "alk_phos"=>"67", "creatinine"=>"50", "esr"=>"9", "crp"=>"<5"}, "commit"=>"submit", "controller"=>"blood_tests", "action"=>"create"}}).and_return({'id' =>  1})
+expect(BloodTestsController).to receive(:get).with( "/legend").and_return({"hb" => {"name" => "Hb","fullname" => "Haemoglobin","unit" => "g/L","min" => 11.5,"max" => 16},"mcv" => {"name" => "MCV","fullname" => "Mean Cell Volume","unit" => "fL","min" => 80,"max" => 100},"wbc" => {"name" => "WBC","fullname" => "White Blood Cells","unit" => "x10\u003Csup\u003E9\u003C/sup\u003E/L","min" => 4,"max" => 11},"platelets" => {"name" => "Platelets","fullname" => "Platelets","unit" => "x10\u003Csup\u003E9\u003C/sup\u003E/L","min" => 140,"max" => 440},"neutrophils" => {"name" => "Neutrophils","fullname" => "Neutrophils","unit" => "x10\u003Csup\u003E9\u003C/sup\u003E/L","min" => 2.5,"max" => 7.5},"lymphocytes" => {"name" => "Lymphocytes","fullname" => "Lymphocytes","unit" => "x10\u003Csup\u003E9\u003C/sup\u003E/L","min" => 1.0,"max" => 4.8},"alt" => {"name" => "ALT","fullname" => "Alanine Aminotransferase","unit" => "µkat/L","min" => 10,"max" => 40},"alk_phos" => {"name" => "Alk Phos","fullname" => "Alkaline Phosphates","unit" => "U/L","min" => 44,"max" => 147},"creatinine" => {"name" => "Creatinine","fullname" => "Creatinine","unit" => "μmol/L","min" => 50,"max" => 98},"esr" => {"name" => "ESR","fullname" => "Erythrocyte Sedimentation Rate","unit" => "mm/hr","min" => 0,"max" => 26},"crp" => {"name" => "CRP","fullname" => "C Reactive Protein","unit" => "mg/L","min" => 0,"max" => 5}})
+expect(BloodTestsController).to receive(:get).with( "/1.json").and_return({"taken_on"=> date, 
+  "hb" => 13, 
+  "mcv" => 88, 
+  "wbc" => 7.0, 
+  "platelets" => 278, 
+  "neutrophils" => 4.4, 
+  "lymphocytes" => 2.2, 
+  "alt" => 103, 
+  "alk_phos" => 67, 
+  "creatinine" => 50, 
+  "esr" => 9, 
+  "crp" => "<5"})
   visit new_blood_test_path
   fill_in 'blood_test[taken_on]', with: date
   fill_in 'blood_test[hb]', with: '13'

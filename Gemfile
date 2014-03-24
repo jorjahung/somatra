@@ -34,12 +34,16 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-group :development do
+group :development, :test do
   gem 'cucumber-rails', :require => false
   gem 'rspec-rails'
   gem 'database_cleaner'
   gem 'guard'
   gem 'poltergeist'
+end
+
+group :test do 
+  gem 'webmock'
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

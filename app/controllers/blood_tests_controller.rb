@@ -1,19 +1,14 @@
 class BloodTestsController < ApplicationController
   include HTTParty
-  base_uri 'http://localhost:3000/blood-tests'
+  base_uri ENV['BASE_URI']+'/blood-tests'
 
   def new
     @blood_test = BloodTest.new
   end
 
   def create
-    @blood_test = BloodTest.new(blood_test_params)
-    if @blood_test.save
-      redirect_to blood_test_path(@blood_test)
-    else
-      flash.now[:errors] = @blood_test.error_messages
-      render action: 'new'
-    end
+    blood_test = self.class.post('/remote', body: params)
+    redirect_to blood_test_path(blood_test['id'])
   end
 
   def show
