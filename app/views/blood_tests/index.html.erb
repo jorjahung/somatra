@@ -19,7 +19,7 @@
   <tbody>
   <% @blood_tests.each do |blood_test| %>
     <tr>
-      <td><%= link_to Date.parse(blood_test["taken_on"]).strftime("%d %b %Y"), blood_test_path(blood_test) %></td>
+      <td><%= link_to Date.parse(blood_test["taken_on"]).strftime("%d %b %Y"), "/blood-tests/#{blood_test['id']}" %></td>
       <% @methods.each do |method| %>
         <td <%= class_for(blood_test, method) %>>
           <%= blood_test[method] %>

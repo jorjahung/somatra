@@ -17,8 +17,10 @@ class BloodTestsController < ApplicationController
   end
 
   def show
-    @blood_test = BloodTest.find(params[:id])
-    @probe = BloodProbe.new(@blood_test)
+    @legend = self.class.get("/legend")
+    @blood_test = self.class.get("/#{params[:id]}.json")
+    set_ranges
+    set_headers
   end
 
   def edit

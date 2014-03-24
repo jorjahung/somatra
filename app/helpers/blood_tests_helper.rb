@@ -1,6 +1,5 @@
 module BloodTestsHelper
 
-
   def methods
     ["hb",
       "mcv",
