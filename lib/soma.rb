@@ -1,9 +1,20 @@
-class Soma < Struct.new :base_uri
+class Soma < Struct.new :base_uri, :token
   
   def self.auth(base_uri)
-    #connects to soma and authenticates
-    # if it worked it will then create new one
-    new(base_uri)
+    response = HTTParty.post("#{ENV['BASE_URI']}/app_auth", body: {app: 1, key: "#{ENV['SOMA_KEY']}"})
+    puts "%" * 80
+    puts "%" * 80
+    puts response.headers.inspect
+    puts "%" * 80
+    puts "%" * 80
+    if response.code == 200
+      token = create_token_with(response.body)
+      #connects to soma and authenticates
+      # if it worked it will then create new one
+      return new(base_uri, token)
+    else
+      raise "Could not connect to SOMA"
+    end
   end
 
   def legend
@@ -33,5 +44,9 @@ class Soma < Struct.new :base_uri
 
   def post(url, body_params)
     HTTParty.post("#{base_uri}#{url}", body: body_params)
+  end
+
+  def self.create_token_with(response)
+    puts Digest::HMAC.hexdigest(JSON.parse(response)['challenge'], "#{ENV['SOMA_SECRET']}", Digest::SHA1)
   end
 end
