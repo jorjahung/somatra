@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 ruby '2.1.0'
 gem 'rails', '4.0.3'
 gem 'httparty'
-
+gem 'rest-client'
 # Use postgresql as the database for Active Record
 gem 'pg'
 

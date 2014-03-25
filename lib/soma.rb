@@ -1,14 +1,13 @@
 class Soma < Struct.new :base_uri, :token
   
   def self.auth(base_uri)
-    response = HTTParty.post("#{ENV['BASE_URI']}/app_auth", body: {app: 1, key: "#{ENV['SOMA_KEY']}"})
-    puts "%" * 80
-    puts "%" * 80
-    puts response.headers.inspect
-    puts "%" * 80
-    puts "%" * 80
+    response = RestClient.post("#{ENV['BASE_URI']}/app_auth", {app: 1, key: "#{ENV['SOMA_KEY']}"})
+
     if response.code == 200
+      puts "%" * 80
       token = create_token_with(response.body)
+      puts token
+      puts "%" * 80
       #connects to soma and authenticates
       # if it worked it will then create new one
       return new(base_uri, token)
@@ -39,7 +38,7 @@ class Soma < Struct.new :base_uri, :token
 
   private
   def get(url)
-    HTTParty.get("#{base_uri}#{url}")
+    HTTParty.get("#{base_uri}#{url}?token=#{token}")
   end
 
   def post(url, body_params)
@@ -47,6 +46,6 @@ class Soma < Struct.new :base_uri, :token
   end
 
   def self.create_token_with(response)
-    puts Digest::HMAC.hexdigest(JSON.parse(response)['challenge'], "#{ENV['SOMA_SECRET']}", Digest::SHA1)
+    Digest::HMAC.hexdigest(JSON.parse(response)['challenge'], "#{ENV['SOMA_SECRET']}", Digest::SHA1)
   end
 end

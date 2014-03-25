@@ -30,6 +30,7 @@ module Somatra
 end
 require 'blood_probe'
 require 'httparty'
+require 'rest_client'
 require 'soma'
 soma_uri = ENV['BASE_URI']+'/blood-tests'
 SOMA= Soma.auth(soma_uri)
