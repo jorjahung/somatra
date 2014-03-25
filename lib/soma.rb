@@ -4,12 +4,7 @@ class Soma < Struct.new :base_uri, :token
     response = RestClient.post("#{ENV['BASE_URI']}/app_auth", {app: 1, key: "#{ENV['SOMA_KEY']}"})
 
     if response.code == 200
-      puts "%" * 80
       token = create_token_with(response.body)
-      puts token
-      puts "%" * 80
-      #connects to soma and authenticates
-      # if it worked it will then create new one
       return new(base_uri, token)
     else
       raise "Could not connect to SOMA"
