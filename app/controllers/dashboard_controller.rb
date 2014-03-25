@@ -1,9 +1,7 @@
 class DashboardController < ApplicationController
-  include HTTParty
-  base_uri 'http://localhost:3000/blood-tests'
 
   def index
-    @legend = self.class.get("/legend")
+    @legend = SOMA.legend
     set_headers
     set_methods
     set_ranges
@@ -32,7 +30,7 @@ class DashboardController < ApplicationController
 
   def set_blood_tests
     @blood_tests =  @legend.inject({}) do |hash, (property_name, values)| 
-      hash.merge({ property_name => self.class.get("/results/#{property_name}").body })
+      hash.merge({ property_name => SOMA.show_results_for(property_name).body })
     end
   end
 end

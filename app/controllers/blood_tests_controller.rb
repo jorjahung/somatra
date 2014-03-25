@@ -1,19 +1,17 @@
 class BloodTestsController < ApplicationController
-  include HTTParty
-  base_uri ENV['BASE_URI']+'/blood-tests'
 
   def new
     @blood_test = BloodTest.new
   end
 
   def create
-    blood_test = self.class.post('/remote', body: params)
+    blood_test = SOMA.send_blood_test_result(params)
     redirect_to blood_test_path(blood_test['id'])
   end
 
   def show
-    @legend = self.class.get("/legend")
-    @blood_test = self.class.get("/#{params[:id]}.json")
+    @legend = SOMA.legend
+    @blood_test = SOMA.show(params[:id])
     set_ranges
     set_headers
   end
@@ -36,7 +34,7 @@ class BloodTestsController < ApplicationController
 
   def index 
     prepare_blood_test_table
-    @blood_tests = self.class.get('.json')
+    @blood_tests = SOMA.show_all
   end
 
   def results
@@ -85,7 +83,7 @@ class BloodTestsController < ApplicationController
   end
 
   def prepare_blood_test_table
-    @legend = self.class.get("/legend")
+    @legend = SOMA.legend
     set_headers
     set_units
     set_methods
