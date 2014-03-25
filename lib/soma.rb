@@ -31,6 +31,10 @@ class Soma < Struct.new :base_uri, :token
     post(:"/remote", body_params)
   end
 
+  def send_new_user(user)
+    HTTParty.post("#{ENV['BASE_URI']}/users", body: { user_id: user.id, token: token })
+  end
+
   private
   def get(url)
     HTTParty.get("#{base_uri}#{url}?token=#{token}")
