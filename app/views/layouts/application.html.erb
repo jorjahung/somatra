@@ -5,12 +5,13 @@
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
+  <link href='http://fonts.googleapis.com/css?family=Metrophobic' rel='stylesheet' type='text/css'>
 </head>
 <body>
   <aside class="main-sidebar">
   <h1><%= link_to "Somatra", root_path %></h1>
   <% if user_signed_in? %>
-  <img src="http://www.gravatar.com/avatar/<%= current_user.gravatar_hash %>" />
+  <img src="http://www.gravatar.com/avatar/<%= current_user.gravatar_hash %>?s=200" />
   <p class="username"><%= current_user.username %></p>
   <nav>
     <ul>

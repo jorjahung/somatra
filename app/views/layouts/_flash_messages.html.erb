@@ -1,9 +1,13 @@
+<ul class="flash-messages">
 <% if flash[:errors] && !flash[:errors].empty? %>
-  <ul>
-    <% flash[:errors].each do |error|%>
-      <li class 'flash error'><%= error %></li>
-    <% end %>
-  </ul>
+  <% flash[:errors].each do |error|%>
+    <li class 'flash error'><%= error %></li>
+  <% end %>
 <% end %>
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+<% if notice %>
+  <li class="notice"><%= notice %></li>
+<% end %>
+<% if alert %>
+  <li class="alert"><%= alert %></li>
+<% end %>
+</ul>
