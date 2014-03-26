@@ -15,12 +15,14 @@
 
 <%= render 'moves' %>
 <article class="main-content dangerous-blood">
-  <h1>Watch out for these!</h1>
+  <h1>Diary</h1>
   
-    <% @dangerous_blood_tests_by_date.each_pair do |date, results| %>
-      <% results.each_pair do |name, result| %>
-        <p><%= "On #{Date.parse(date).strftime("%d %b %Y")}, #{name.upcase} result was #{result}." %></p>
-      <% end %>
+    <% @dangerous_blood_tests_by_date.each do |result| %>
+      <h2><%= result['taken_on'] %></h2>
+      I had a <%= link_to "bloodtest", "/blood-tests/#{result['id']}" %> today.<br>
+      <% @methods.each do |method| %>
+        <%= "My #{method} result (#{result[method]}) is out of range." if result[method] != nil %>
+      <% end %></p>
     <% end %>  
 
 </article>
