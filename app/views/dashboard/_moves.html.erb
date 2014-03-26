@@ -1,0 +1,44 @@
+<% if @moves_authorized %>
+  <section class="moves main-content moves-auth">
+    <a href="<%= @moves_authorize_uri %>" data-role="button" data-inline="true">Authorize Moves API</a>
+  </section>
+<% end %>
+<% if @steps %>
+  <section class="moves main-content moves-steps">
+    <h2>Last 7 days' steps (via <%= link_to "Moves", 'http://moves-app.com/' %>)</h2>
+    <p class="hidden"><%= @json.inspect %></p>
+    <p class="hidden"><%= @steps.inspect %></p>
+  </section>
+
+  <script type="text/javascript">
+    // Set width and height
+    var w = 500;
+    var h = 100;
+    var barPadding = 5;
+
+    // Set data
+    var dataset = <%= @steps.to_json %>;
+
+    var svg = d3.select(".moves-steps")
+                .append("svg")
+                .attr("width", w)
+                .attr("height", h);
+
+    svg.selectAll("rect")
+       .data(dataset)
+       .enter()
+       .append("rect")
+       .attr("x", function(d, i) {
+          return i * (w / dataset.length);
+       })
+       .attr("y", function(d) {
+          return h - (d/ 100);  //Height minus data value
+       })
+       .attr("fill", "#0ea3d0")
+       .attr("width", w / dataset.length - barPadding)
+       .attr("height", function(d) {
+          return d / 100;  // <-- Times four!
+       });
+
+  </script>
+<% end %>
