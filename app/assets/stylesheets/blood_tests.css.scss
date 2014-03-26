@@ -87,6 +87,7 @@ table {
   border-collapse: collapse;
   text-align: center;
   display: inline-block;
+  font-size: 0.9em;
 
   thead tr:first-child th {
     padding-bottom: 0.25em;
@@ -101,7 +102,8 @@ table {
     padding: .5em;
     border-right: 2px solid #fff;
     border-bottom: 2px solid #fff;
-    @include border-radius(7px);
+//    @include border-radius(7px);
+    @include border-radius(4px);
   }
   
   th {
@@ -109,12 +111,12 @@ table {
   }
 
   td.danger {
-    background-color: rgba(176, 0, 0, 0.75);
+    background-color: rgba(176, 0, 0, 0.6);
     color: #fff;
   }
 
   td.no-danger {
-    background-color: rgba(0, 176, 0, 0.74);
+    background-color: rgba(0, 176, 0, 0.6);
     color: #fff;
   }
 }
@@ -145,7 +147,7 @@ table {
 .ui-state-active a, .ui-widget-content .ui-state-active a, .ui-widget-header .ui-state-active a {
   background-color: $link-color;
   color: #fff;
-  @include border-radius(8px);
+  @include border-radius(3px);
   cursor: pointer;
 }
 

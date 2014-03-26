@@ -6,4 +6,12 @@ class User < ActiveRecord::Base
   after_create do |user|
     SOMA.send_new_user(user)
   end
+
+  def gravatar_hash
+    Digest::MD5.hexdigest(email)
+  end
+
+  def username
+    email.match(/^(.+)@/)[1].capitalize
+  end
 end

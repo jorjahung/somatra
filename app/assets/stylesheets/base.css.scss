@@ -7,7 +7,8 @@
 
 body {
   font-family: 'helvetica', sans-serif;
-  background-color: #eee;
+//  background-color: #eee;
+  background-color: #cff2f8;
   text-align: center;
 }
 
@@ -29,6 +30,11 @@ h1 {
   font-weight: bold;
   font-size: 2em;
   margin: 1em;
+  font-family: 'Metrophobic', sans-serif;
+}
+
+main > h1 {
+  color: #07244b;
 }
 
 body > header {
@@ -40,13 +46,94 @@ sup {
   vertical-align: super;
 }
 
+main {
+  padding-left: 18em;
+}
+
+.flash-messages {
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  
+  li {
+    display: block;
+    background-color: $main-color;
+    color: #fff;
+    padding: 0.75em 3em;
+    opacity: 0.75;
+    margin-bottom: 1em;
+  }
+}
+
+.main-sidebar {
+  position: fixed;
+  background-color: #fafafa;
+  left: 0;
+  top: 0;
+  width: 18em;
+  height: 100%;
+  z-index: 10;
+  text-align: left;
+  padding: 1.5em;
+  
+  h1 {
+    margin: 0;
+    border-bottom: 1px solid #aaa;
+    
+    a {
+      display: block;
+      color: #111;
+      padding: 0.5em;
+      font-weight: 300;
+      font-family: 'Metrophobic', serif;
+      
+      &:hover {
+        color: $main-color;
+        text-decoration: none;
+      }
+    }
+  }
+  
+  img {
+    margin: 1em auto 0;
+    display: block;
+  }
+  
+  p {
+    margin: 0;
+    padding: 1em;
+  }
+
+  ul {
+    border-top: 1px solid #aaa;
+
+    &:last-child {
+      border-bottom: 1px solid #aaa;
+    }
+
+    li a {
+      display: block;
+      padding: 1em;
+
+      &:hover {
+        background-color: rgba(14, 163, 208, 0.12);
+        text-decoration: none;
+      }
+    }
+  }
+}
+
 .main-content {
   background-color: #fefefe;
   text-align: center;
-  @include border-radius(5px);
-  @include box-shadow(0, 0, 2px, rgba(51, 51, 51, 0.25));
-  margin: 0 auto;
+  @include border-radius(1px);
+//  @include box-shadow(0, 0, 2px, rgba(51, 51, 51, 0.25));
+  margin: 5em auto;
   padding: 1em 1em 1.5em;
+}
+
+h1 + .main-content {
+  margin-top: 0;
 }
 
 .bar-chart {
@@ -88,4 +175,43 @@ sup {
   background: none;
   background-color: #fefefe;
   width: 900px;
+}
+
+form.main-content.devise-form {
+  text-align: left;
+  
+  label, input {
+    display: block;
+    text-align: left;
+    font-size: 1.4em;
+    width: 90%;
+  }
+  
+  label {
+    margin-left: 1em;
+    margin-bottom: 0.4em;
+  }
+  
+  input {
+    margin-bottom: 0.5em;
+    border: none;
+    padding: 0.5em;
+//    background-color: rgba(207, 242, 248, 0.54);
+    border: 1px solid $main-color;
+    @include border-radius(3px);
+    
+    &:active, &:focus {
+      outline: none;
+    }
+  }
+  
+  input[type=checkbox] {
+    display: inline-block;
+    width: auto;
+  }
+  
+  input[type=checkbox] + label {
+    display: inline-block;
+    width: auto;
+  }
 }

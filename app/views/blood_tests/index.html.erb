@@ -2,7 +2,7 @@
 <table class="main-content">
   <thead>
     <tr>
-      <th>Taken on</th>
+      <th>Date</th>
       <% @headers.each do |header| %>
         <th><%= header %></th>
       <% end %>
@@ -13,7 +13,6 @@
       <% @units.each do |unit| %>
         <th><%= unit.html_safe %></th>
       <% end %>
-      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -25,7 +24,6 @@
           <%= blood_test[method] %>
         </td>
       <% end %>
-      <td><%= link_to "Edit", edit_blood_test_path(blood_test['id']) %></td>
     </tr>
   <% end %>
   </tbody>
