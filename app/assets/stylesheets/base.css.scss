@@ -40,6 +40,56 @@ sup {
   vertical-align: super;
 }
 
+main {
+  padding-left: 18em;
+}
+
+.main-sidebar {
+  position: fixed;
+  background-color: #fafafa;
+  left: 0;
+  top: 0;
+  width: 18em;
+  height: 100%;
+  z-index: 10;
+  text-align: left;
+  padding: 1.5em;
+  
+  h1 {
+    margin: 0.5em;
+    font-weight: 400;
+    font-family: serif;
+  }
+  
+  img {
+    margin: 0 auto;
+    display: block;
+  }
+  
+  p {
+    margin: 0;
+    padding: 1em;
+  }
+
+  ul {
+    border-top: 1px solid #aaa;
+
+    &:last-child {
+      border-bottom: 1px solid #aaa;
+    }
+
+    li a {
+      display: block;
+      padding: 1em;
+
+      &:hover {
+        background-color: rgba(14, 163, 208, 0.12);
+        text-decoration: none;
+      }
+    }
+  }
+}
+
 .main-content {
   background-color: #fefefe;
   text-align: center;
