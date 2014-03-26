@@ -8,6 +8,7 @@ gem 'rest-client'
 # Use postgresql as the database for Active Record
 gem 'pg'
 gem 'devise'
+gem 'sentimental'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

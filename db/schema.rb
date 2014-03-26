@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140325172100) do
+ActiveRecord::Schema.define(version: 20140326160507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,14 @@ ActiveRecord::Schema.define(version: 20140325172100) do
     t.float    "creatinine"
     t.float    "esr"
     t.string   "crp"
+  end
+
+  create_table "moods", force: true do |t|
+    t.text     "user_mood"
+    t.string   "stored_sentiment"
+    t.float    "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

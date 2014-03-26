@@ -11,6 +11,9 @@ Somatra::Application.routes.draw do
   patch 'blood-tests/:id' => 'blood_tests#update', as: :update_blood_test
   get 'blood-tests/results/:name'=> 'blood_tests#results'
   delete 'blood-tests/:id' => 'blood_tests#destroy', as: :delete_blood_test
+  get "moods/index", as: :moods
+  post "moods/index" => 'moods#create'
+
   # You can have the root of your site routed with "root"
   root 'dashboard#index'
 
