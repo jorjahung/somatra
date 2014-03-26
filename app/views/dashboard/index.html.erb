@@ -13,12 +13,12 @@
   <% end %>
 </div>
 
-<article>
+<article class="main-content dangerous-blood">
   <h1>Watch out for these!</h1>
   
     <% @dangerous_blood_tests_by_date.each_pair do |date, results| %>
       <% results.each_pair do |name, result| %>
-        <p><%= "On #{Date.parse(date).strftime("%d %b %Y")}, #{name} result was #{result}." %></p>
+        <p><%= "On #{Date.parse(date).strftime("%d %b %Y")}, #{name.upcase} result was #{result}." %></p>
       <% end %>
     <% end %>  
 
