@@ -6,6 +6,7 @@ class DashboardController < ApplicationController
     set_methods
     set_ranges
     set_blood_tests
+    set_dangerous_blood_tests_by_date
   end
 
   private
@@ -33,4 +34,9 @@ class DashboardController < ApplicationController
       hash.merge({ property_name => SOMA.show_results_for(property_name).body })
     end
   end
+
+  def set_dangerous_blood_tests_by_date
+    @dangerous_blood_tests_by_date =  SOMA.show_dangerous_results
+  end
+
 end
