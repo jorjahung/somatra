@@ -3,12 +3,14 @@ require 'open-uri'
 class DashboardController < ApplicationController
 
   def index
-    check_for_moves_auth
-    set_moves_data if session[:access_token]
+    if current_user
+      check_for_moves_auth
+      set_moves_data if current_user.moves_auth_token
+      gravatar_profile = JSON.parse(open("http://en.gravatar.com/#{current_user.gravatar_hash}.json").readlines.join)
+      @fullname = gravatar_profile["entry"][0]["displayName"]
+    end
+
     @legend = SOMA.legend
-    
-    gravatar_profile = JSON.parse(open("http://en.gravatar.com/#{current_user.gravatar_hash}.json").readlines.join)
-    @fullname = gravatar_profile["entry"][0]["displayName"]
     set_headers
     set_methods
     set_ranges
@@ -17,7 +19,8 @@ class DashboardController < ApplicationController
 
   def moves_callback
     new_token = moves_client.auth_code.get_token(params[:code], :redirect_uri => redirect_uri)
-    session[:access_token] = new_token.token
+    current_user.moves_auth_token = new_token.token
+    current_user.save
     redirect_to root_path
   end
 
@@ -58,7 +61,7 @@ class DashboardController < ApplicationController
   end
 
   def check_for_moves_auth
-    if !session[:access_token].nil?
+    if !current_user.moves_auth_token.nil?
       @moves_authorized = false
     else
       @moves_authorize_uri = moves_client.auth_code.authorize_url(:redirect_uri => redirect_uri, scope: 'activity')
@@ -86,6 +89,6 @@ class DashboardController < ApplicationController
   end
 
   def access_token
-    OAuth2::AccessToken.new(moves_client, session[:access_token], :refresh_token => session[:refresh_token])
+    OAuth2::AccessToken.new(moves_client, current_user.moves_auth_token, :refresh_token => session[:refresh_token])
   end
 end
