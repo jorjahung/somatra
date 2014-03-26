@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(version: 20140326180054) do
     t.string   "crp"
   end
 
+  create_table "moods", force: true do |t|
+    t.text     "user_mood"
+    t.string   "stored_sentiment"
+    t.float    "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false

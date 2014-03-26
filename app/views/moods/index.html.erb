@@ -1,0 +1,17 @@
+<h1>Mood Checker</h1>
+
+<%= form_for @mood, html: {class: 'main-content'}, :authenticity_token => false do |form| %>
+<p></p>
+  <%= form.label :user_mood, 'How are you feeling today?' %>
+  <%= form.text_field :user_mood %>
+  <%= form.submit 'submit' %>
+<% end %>
+<aside>
+  <ul>
+  <% @moods.each do |mood| %>
+    <li>On <%= mood.created_at %>, you were feeling: <%= mood.user_mood %>
+
+    </li>
+  <% end %>
+  </ul>
+</aside>
