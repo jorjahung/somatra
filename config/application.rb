@@ -5,6 +5,7 @@ require "active_record/railtie"
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "sprockets/railtie"
+
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -31,6 +32,7 @@ end
 require 'blood_probe'
 require 'httparty'
 require 'rest_client'
+require 'sentimental'
 require 'soma'
 soma_uri = ENV['BASE_URI']+'/blood-tests'
 SOMA = Soma.auth(soma_uri)

@@ -10,6 +10,7 @@ gem 'pg'
 
 # Authentication
 gem 'devise'
+gem 'sentimental'
 gem 'oauth2'
 
 # Use SCSS for stylesheets
