@@ -1,9 +1,14 @@
+require 'open-uri'
+
 class DashboardController < ApplicationController
 
   def index
     check_for_moves_auth
     set_moves_data if session[:access_token]
     @legend = SOMA.legend
+    
+    gravatar_profile = JSON.parse(open("http://en.gravatar.com/#{current_user.gravatar_hash}.json").readlines.join)
+    @fullname = gravatar_profile["entry"][0]["displayName"]
     set_headers
     set_methods
     set_ranges
