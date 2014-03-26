@@ -35,4 +35,4 @@ require 'rest_client'
 require 'sentimental'
 require 'soma'
 soma_uri = ENV['BASE_URI']+'/blood-tests'
-SOMA= Soma.auth(soma_uri)
+SOMA = Soma.auth(soma_uri)

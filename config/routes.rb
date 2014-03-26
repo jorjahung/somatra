@@ -13,6 +13,7 @@ Somatra::Application.routes.draw do
   delete 'blood-tests/:id' => 'blood_tests#destroy', as: :delete_blood_test
   get "moods/index", as: :moods
   post "moods/index" => 'moods#create'
+  get 'moves/callback' => 'dashboard#moves_callback'
 
   # You can have the root of your site routed with "root"
   root 'dashboard#index'
