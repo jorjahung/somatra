@@ -3,9 +3,6 @@ In order to track all the information about my health in one place
 As a health tracker
 I want to see a homepage
 
-Background:
-  Given I enter the results
-
 Scenario: Homepage navigation
   Given I visit the homepage
   Then I can go to a new blood test form

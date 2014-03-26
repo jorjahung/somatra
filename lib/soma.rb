@@ -27,6 +27,10 @@ class Soma < Struct.new :base_uri, :token
     get(:"/results/#{test}")
   end
 
+  def show_dangerous_results
+    get(:"/dangerous_results")
+  end
+
   def send_blood_test_result(body_params)
     post(:"/remote", body_params)
   end
