@@ -3,6 +3,7 @@
 <head>
   <title>Somatra</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag    "microphone" %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
   <link href='http://fonts.googleapis.com/css?family=Metrophobic' rel='stylesheet' type='text/css'>
@@ -10,29 +11,29 @@
 <body>
   <aside class="main-sidebar">
     <h1><%= link_to "Somatra", root_path %></h1>
-    <% if user_signed_in? %>
-    <img src="http://www.gravatar.com/avatar/<%= current_user.gravatar_hash %>?s=200" />
-    <% if @fullname %>
-      <p class="username"><%= @fullname %></p>
+    <% if current_user %>
+      <img src="http://www.gravatar.com/avatar/<%= current_user.gravatar_hash %>?s=200" />
+      <% if @fullname %>
+        <p class="username"><%= @fullname %></p>
+      <% else %>
+        <p class="username"><%= current_user.username %></p>
+      <% end %>
+      <nav>
+        <ul>
+          <li><%= link_to "Enter new blood test results", new_blood_test_path %></li>
+          <li><%= link_to "See blood test results table", blood_tests_path %></li>
+        </ul>
+        <ul>
+          <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
+        </ul>
+      </nav>
     <% else %>
-      <p class="username"><%= current_user.username %></p>
-    <% end %>
-    <nav>
-      <ul>
-        <li><%= link_to "Enter new blood test results", new_blood_test_path %></li>
-        <li><%= link_to "See blood test results table", blood_tests_path %></li>
-      </ul>
-      <ul>
-        <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
-      </ul>
-    </nav>
-    <% else %>
-    <nav>
-      <ul>
-        <li><%= link_to "Sign In", new_user_session_path %></li>
-        <li><%= link_to "Sign Up", new_user_registration_path %></li>
-      </ul>
-    </nav>
+      <nav>
+        <ul>
+          <li><%= link_to "Sign In", new_user_session_path %></li>
+          <li><%= link_to "Sign Up", new_user_registration_path %></li>
+        </ul>
+      </nav>
     <% end %>
   </aside>
   <main>

@@ -10,12 +10,16 @@
 
 path.safe {
     stroke:none;
-    fill:rgba(0, 217, 50, 0.4);
+    fill: rgba(14, 163, 208, 0.25);
 }
 
 path.dataline {
-    stroke:red;
-    fill:none;
+  stroke: darken($main-color, 10%);
+  fill:none;
+}
+
+circle.data-point {
+  fill: darken($main-color, 10%);
 }
 
 div.tooltip {   
@@ -25,7 +29,7 @@ div.tooltip {
   min-height: 30px;                 
   padding: 0.5em;             
   font: 0.75em sans-serif;        
-  background: lightsteelblue;
+  background: darken($main-color, 30%);
   color: #fff;
   border: 0px;      
   @include border-radiuses(10px, 10px, 10px, 0);           
