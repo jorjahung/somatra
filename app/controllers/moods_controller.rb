@@ -29,11 +29,11 @@ class MoodsController < ApplicationController
     Mood.last.update(stored_sentiment: tone)
 
     if tone == :negative   
-      flash.now[:notice] = "You said: #{your_mood}. (Sorry you're having a bad day)"
+      flash.now[:notice] = "You said: #{your_mood}. We've stored this as a negative emotion."
     elsif tone == :neutral
-      flash.now[:notice] = "You said: #{your_mood}. (Keep on truckin')"
+      flash.now[:notice] = "You said: #{your_mood}. We've stored this as a neutral emotion."
     else   
-      flash.now[:notice] = "You said: #{your_mood}. (I'm glad you're in a good mood.)"
+      flash.now[:notice] = "You said: #{your_mood}. We've stored this as a positive emotion."
     end
   end
 
