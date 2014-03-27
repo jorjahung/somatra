@@ -15,6 +15,7 @@ class DashboardController < ApplicationController
     set_methods
     set_ranges
     set_blood_tests
+    set_dangerous_blood_tests_by_date
   end
 
   def moves_callback
@@ -48,6 +49,10 @@ class DashboardController < ApplicationController
     @blood_tests =  @legend.inject({}) do |hash, (property_name, values)| 
       hash.merge({ property_name => SOMA.show_results_for(property_name).body })
     end
+  end
+
+  def set_dangerous_blood_tests_by_date
+    @dangerous_blood_tests_by_date =  SOMA.show_dangerous_results
   end
 
   def moves_client
@@ -91,4 +96,5 @@ class DashboardController < ApplicationController
   def access_token
     OAuth2::AccessToken.new(moves_client, current_user.moves_auth_token, :refresh_token => session[:refresh_token])
   end
+
 end

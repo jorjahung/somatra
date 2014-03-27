@@ -6,7 +6,7 @@ ENV['BASE_URI']='http://localhost:3000'
 # files.
 
 require 'cucumber/rails'
-require 'webmock/cucumber'
+# require 'webmock/cucumber'
 require 'cucumber/rspec/doubles'
 # WebMock.disable_net_connect!(allow_localhost: true)
 
