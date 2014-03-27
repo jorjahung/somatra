@@ -1,6 +1,7 @@
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
 <div id="tabs" class="main-content">
+  <h1>Blood Tests Summary</h1>
   <ul>
   <% @headers.each_with_index do |header, i| %>
     <li><a href="#<%= @methods[i] %>"><%= header %></a></li>

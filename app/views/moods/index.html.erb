@@ -9,8 +9,8 @@
 <aside>
   <ul>
   <% @moods.each do |mood| %>
-    <li>On <%= mood.created_at %>, you were feeling: <%= mood.user_mood %>
-
+    <li>
+      On <%= mood.created_at %>, you were feeling: <%= mood.user_mood %>
     </li>
   <% end %>
   </ul>
