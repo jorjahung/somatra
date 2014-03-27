@@ -14,8 +14,14 @@
     </div>
   <% end %>
 </div>
-
+<section class="main-content">
+  <h1>Moodiness</h1>
+  You are feeling positive <%= positive_percentage %>% of the time.
+  You are feeling neutral <%= neutral_percentage %>% of the time.
+  You are feeling negative <%= negative_percentage %>% of the time.
+</section>
 <%= render 'moves' %>
+
 <section class="diary">
   <h1>Diary</h1>
   <section>

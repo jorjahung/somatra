@@ -35,3 +35,27 @@ div.tooltip {
   @include border-radiuses(10px, 10px, 10px, 0);           
   pointer-events: none;         
 }
+
+.mood-sidebar {
+  form.main-content {
+    width: 15em;
+    margin: .2em auto;
+    padding: .22em 0 1px;
+
+    label {
+      text-align: center;
+      width: 100%;
+    }
+
+    input {
+      margin-top: .5em;
+      width: 80%;
+    }
+
+    input[type=submit]{
+      width: auto;
+      margin: .3em auto;
+      padding: 0.5em 0.5em; 
+    }
+  }
+}

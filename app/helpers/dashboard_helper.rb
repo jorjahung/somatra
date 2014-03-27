@@ -13,4 +13,20 @@ module DashboardHelper
       crp: BloodProbe::C_REACTIVE_PROTEIN_RANGE
     }
   end
+
+  def positive_percentage
+    ((moodiness.select {|score| score > 0}.count).to_f)/ (moodiness.length).to_f * 100
+  end
+
+  def negative_percentage
+    ((moodiness.select {|score| score < 0}.count).to_f)/ (moodiness.length).to_f * 100
+  end
+
+  def neutral_percentage
+    ((moodiness.select {|score| score == 0}.count).to_f)/ (moodiness.length).to_f * 100
+  end
+
+  def moodiness
+    Mood.all.inject([]) {|moods, mood| moods << mood.score }
+  end
 end

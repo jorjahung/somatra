@@ -7,7 +7,7 @@ class MoodsController < ApplicationController
 
   def create
    @mood = Mood.create(mood_params)
-    if @mood.save
+   if @mood.save
       analyze_sentiment
       @mood = Mood.new
       @moods = Mood.all
@@ -15,6 +15,11 @@ class MoodsController < ApplicationController
     else
       flash.now[:notice] = "Something went wrong and I didn't get your mood"
     end
+  end
+
+private
+  def mood_params
+    params.require(:mood).permit(:user_mood, :stored_sentiment, :score)
   end
 
   def analyze_sentiment
@@ -35,11 +40,6 @@ class MoodsController < ApplicationController
     else   
       flash.now[:notice] = "You said: #{your_mood}. We've stored this as a positive emotion."
     end
-  end
-
-  private
-    def mood_params
-    params.require(:mood).permit(:user_mood, :stored_sentiment, :score)
   end
 
 end

@@ -3,6 +3,7 @@ require 'open-uri'
 class DashboardController < ApplicationController
 
   def index
+    
     if current_user
       check_for_moves_auth
       set_moves_data if current_user.moves_auth_token

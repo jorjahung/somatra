@@ -24,6 +24,22 @@
           <li><%= link_to "See blood test results table", blood_tests_path %></li>
         </ul>
         <ul>
+          <li><a href="#">How are you feeling today?</a></li>
+          <li class="mood-sidebar"> 
+            <%= form_for Mood.new, html: {class: 'main-content'} do |form| %>
+              <%= form.button ":)", name: "mood[user_mood]", value: "positive" %>
+              <%= form.button ":|", name: "mood[user_mood]", value: "neutral" %>
+              <%= form.button ":(", name: "mood[user_mood]", value: "negative" %>
+            <% end %>
+          </li>
+          <li class="mood-sidebar"> 
+            <%= form_for Mood.new, html: {class: 'main-content'} do |form| %>
+              <%= form.text_field :user_mood %>
+              <%= form.submit 'I hear ya, sistah' %>
+            <% end %>
+          </li>
+        </ul>
+        <ul>
           <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
         </ul>
       </nav>
