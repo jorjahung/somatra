@@ -41,45 +41,9 @@ class BloodTestsController < ApplicationController
     render json: BloodTest.as_json(params[:name])
   end
 
-  def legend
-    render json: BloodTest.legend_as_json
-  end
-
   def omnigraph
     prepare_blood_test_table
-    blood_tests = SOMA.show_all
-    # blood_tests =  @legend.inject({}) do |hash, (property_name, values)| 
-    #   hash.merge({ property_name => SOMA.show_results_for(property_name).parsed_response })
-    # end
-    # blood_tests["hb"].each          { |d| d["result"] = ((d["result"] * 8.9) - 72.35).to_i }
-    # blood_tests["mcv"].each         { |d| d["result"] = ((d["result"] * 2) - 150).to_i }
-    # blood_tests["wbc"].each         { |d| d["result"] = ((d["result"] * 5.7) + 7.2).to_i }
-    # blood_tests["platelets"].each   { |d| d["result"] = ((d["result"] * 0.13) + 11.8).to_i }
-    # blood_tests["neutrophils"].each { |d| d["result"] = ((d["result"] * 8) + 10).to_i }
-    # blood_tests["lymphocytes"].each { |d| d["result"] = ((d["result"] * 10.5) + 19.5).to_i }
-    # blood_tests["alt"].each         { |d| d["result"] = ((d["result"] * 1.3) + 17).to_i }
-    # blood_tests["alk_phos"].each    { |d| d["result"] = ((d["result"] * 0.388) + 12.928).to_i }
-    # blood_tests["creatinine"].each  { |d| d["result"] = ((d["result"] * 0.833) - 10).to_i }
-    # blood_tests["esr"].each         { |d| d["result"] = ((d["result"] * 1.538) + 30).to_i }
-    # blood_tests["wbc"].each         { |d| d["result"] = ((d["result"] * 8) + 30).to_i }
-
-    blood_tests.each do |test|
-      test["hb"]  = ((test["hb"] * 8.9) - 72.35).to_i
-      test["mcv"] = ((test["mcv"] * 2) - 150).to_i
-      test["wbc"] = ((test["wbc"] * 5.7) + 7.2).to_i
-      test["platelets"] = ((test["platelets"] * 0.13) + 11.8).to_i
-      test["neutrophils"] = ((test["neutrophils"] * 8) + 10).to_i
-      test["lymphocytes"] = ((test["lymphocytes"] * 10.5) + 19.5).to_i
-      test["alt"] = ((test["alt"] * 1.3) + 17).to_i
-      test["alk_phos"] = ((test["alk_phos"] * 0.388) + 12.928).to_i if test["alk_phos"]
-      test["creatinine"] = ((test["creatinine"] * 0.833) - 10).to_i
-      test["esr"] = ((test["esr"] * 1.538) + 30).to_i
-      test["crp"] = ((test["crp"].to_i * 8) + 30).to_i
-      test.delete("id")
-      test.delete("created_at")
-      test.delete("updated_at")
-    end
-    @blood_tests = blood_tests
+    prepare_blood_tests_for_omnigraph
   end
 
   private
@@ -125,5 +89,59 @@ class BloodTestsController < ApplicationController
     set_units
     set_methods
     set_ranges
+  end
+
+  def prepare_blood_tests_for_omnigraph
+    blood_tests = SOMA.show_all
+    @legend = SOMA.legend
+    blood_tests.each do |test|
+      @legend.each { |name, data| test[name]  = send("normalise_#{name}", test[name] ) }
+      test.delete_if {|k, v| k == "id" || k == "created_at" || k == "updated_at" }
+    end
+    @blood_tests = blood_tests
+  end
+
+  def normalise_hb(value)
+    ((value * 8.9) - 72.35).to_i
+  end
+
+  def normalise_mcv(value)
+    ((value * 2) - 150).to_i
+  end
+
+  def normalise_wbc(value)
+    ((value * 5.7) + 7.2).to_i
+  end
+
+  def normalise_platelets(value)
+    ((value * 0.13) + 11.8).to_i
+  end
+
+  def normalise_neutrophils(value)
+    ((value * 8) + 10).to_i
+  end
+
+  def normalise_lymphocytes(value)
+    ((value * 10.5) + 19.5).to_i
+  end
+
+  def normalise_alt(value)
+    ((value * 1.3) + 17).to_i
+  end
+
+  def normalise_alk_phos(value)
+    ((value * 0.388) + 12.928).to_i if value
+  end
+
+  def normalise_creatinine(value)
+    ((value * 0.833) - 10).to_i
+  end
+
+  def normalise_esr(value)
+    ((value * 1.538) + 30).to_i
+  end
+
+  def normalise_crp(value)
+    ((value.to_i * 8) + 30).to_i
   end
 end
