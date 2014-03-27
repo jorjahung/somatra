@@ -1,15 +1,16 @@
-<p><%= @blood_tests.inspect %></p>
-
-<div class="graph"></div>
+<div class="graph main-content"></div>
 
 <script src="http://d3js.org/d3.v3.js"></script>
 <script>
+
+var dataset = <%= @blood_tests.parsed_response.to_json.html_safe %>;
+console.log(dataset);
 
 var margin = {top: 20, right: 80, bottom: 30, left: 50},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-var parseDate = d3.time.format("%Y%m%d").parse;
+var parseDate = d3.time.format("%Y-%m-%d").parse;
 
 var x = d3.time.scale()
     .range([0, width]);
@@ -30,7 +31,18 @@ var yAxis = d3.svg.axis()
 var line = d3.svg.line()
     .interpolate("basis")
     .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.temperature); });
+    .y(function(d) { return y(d.result); });
+
+var area = d3.svg.area()
+    .x(function (d) {
+    return x(d.date);
+})
+    .y0(function (d) {
+    return y(30);
+})
+    .y1(function (d) {
+    return y(70);
+});
 
 var svg = d3.select(".graph").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -38,19 +50,18 @@ var svg = d3.select(".graph").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.tsv("http://localhost:8080/assets/data.tsv", function(error, data) {
-  console.log(data)
-  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
+function n(error, data) {
+  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "taken_on"; }));
 
   data.forEach(function(d) {
-    d.date = parseDate(d.date);
+   d.date = parseDate(d.taken_on);
   });
 
-  var cities = color.domain().map(function(name) {
+  var tests = color.domain().map(function(name) {
     return {
       name: name,
       values: data.map(function(d) {
-        return {date: d.date, temperature: +d[name]};
+        return {date: d.date, result: +d[name]};
       })
     };
   });
@@ -58,9 +69,14 @@ d3.tsv("http://localhost:8080/assets/data.tsv", function(error, data) {
   x.domain(d3.extent(data, function(d) { return d.date; }));
 
   y.domain([
-    d3.min(cities, function(c) { return d3.min(c.values, function(v) { return v.temperature; }); }),
-    d3.max(cities, function(c) { return d3.max(c.values, function(v) { return v.temperature; }); })
+    d3.min(tests, function(c) { return 0; }),
+    d3.max(tests, function(c) { return 100; })
   ]);
+
+  svg.append("path")
+    .datum(data)
+    .attr("class", "safe")
+    .attr("d", area);
 
   svg.append("g")
       .attr("class", "x axis")
@@ -74,26 +90,64 @@ d3.tsv("http://localhost:8080/assets/data.tsv", function(error, data) {
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
       .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("Temperature (ºF)");
+      .style("text-anchor", "end");
 
-  var city = svg.selectAll(".city")
-      .data(cities)
+  var test = svg.selectAll(".test")
+      .data(tests)
     .enter().append("g")
-      .attr("class", "city");
+      .attr("class", "test");
 
-  city.append("path")
+  test.append("path")
       .attr("class", "line")
       .attr("d", function(d) { return line(d.values); })
       .style("stroke", function(d) { return color(d.name); })
-      .style("fill", "none");
+      .style("fill", "none")
+      .style("stroke-width", 3);
 
-  city.append("text")
+  // var legend = svg.append("g")
+  //   .attr("class", "legend")
+  //       //.attr("x", w - 65)
+  //       //.attr("y", 50)
+  //   .attr("height", 100)
+  //   .attr("width", 100)
+  //   .attr('transform', 'translate(-20,50)')    
+      
+    
+  //   legend.selectAll('rect')
+  //     .data(dataset)
+  //     .enter()
+  //     .append("rect")
+  //   .attr("x", width - 65)
+  //     .attr("y", function(d, i){ return i *  20;})
+  //   .attr("width", 10)
+  //   .attr("height", 10)
+  //   .style("fill", function(d) { 
+  //       // var color = color_hash[dataset.indexOf(d)][1];
+  //       return color(d.name);
+  //     })
+      
+  //   legend.selectAll('text')
+  //     .data(dataset)
+  //     .enter()
+  //     .append("text")
+  //   .attr("x", width - 52)
+  //     .attr("y", function(d, i){ return i *  20 + 9;})
+  //   .text(function(d) {
+  //       // var text = color_hash[dataset.indexOf(d)][0];
+  //       return "hb";
+  //     });
+
+  test.append("text")
       .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
-      .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.temperature) + ")"; })
-      .attr("x", 3)
+      // .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.result) + ")"; })
+      .attr("x", width - 100)
       .attr("dy", ".35em")
+      .attr("class", "hidden")
+      .style("fill", function(d) { return color(d.name); })
+      // .attr("y", 10)
       .text(function(d) { return d.name; });
-});
+}
+                         
+n([],dataset);
 
 </script>

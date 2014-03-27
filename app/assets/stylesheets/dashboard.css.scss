@@ -31,3 +31,10 @@ div.tooltip {
   @include border-radiuses(10px, 10px, 10px, 0);           
   pointer-events: none;         
 }
+
+g.test:hover {
+  text.hidden {
+    display: block;
+    font-size: 1.5em;
+  }
+}
