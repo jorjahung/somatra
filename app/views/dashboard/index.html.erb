@@ -1,3 +1,4 @@
+<% if user_signed_in? %>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
 <div id="tabs" class="main-content">
@@ -26,3 +27,7 @@
     <% end %>  
 
 </article>
+<% else %>
+<h1>Welcome to Somatra!</h1>
+<h2>To start your new healthy life, please <%= link_to "sign .p", new_user_registration_path %>.</h2>
+<% end %>
