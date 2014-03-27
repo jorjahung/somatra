@@ -22,10 +22,17 @@
     <% @dangerous_blood_tests_by_date.each do |result| %>
     <article>
       <h2><%= result['taken_on'] %></h2>
+      <p>
       I had a <%= link_to "bloodtest", "/blood-tests/#{result['id']}" %> today.<br>
-      <% @methods.each do |method| %>
-        <%= "My #{method} result (#{result[method]}) is out of range." if result[method] != nil %>
-      <% end %></p>
+      <% if result.length > 2 %>
+        <%= result.length == 3 ? "This was" : "These were" %> out of range:<br>
+        <% @methods.each do |method| %>
+          <%= "#{@legend[method]["fullname"]}: #{result[method]}" if result[method] != nil %>
+        <% end %>
+      <% else %>
+        Everything was within range.
+      <% end %>
+      </p>
     </article>  
     <% end %>
   </section>
