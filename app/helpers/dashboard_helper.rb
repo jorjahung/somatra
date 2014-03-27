@@ -15,15 +15,15 @@ module DashboardHelper
   end
 
   def positive_percentage
-    ((moodiness.select {|score| score > 0}.count).to_f)/ (moodiness.length).to_f * 100
+    (((moodiness.select {|score| score > 0}.count).to_f)/ (moodiness.length).to_f * 100).round
   end
 
   def negative_percentage
-    ((moodiness.select {|score| score < 0}.count).to_f)/ (moodiness.length).to_f * 100
+    (((moodiness.select {|score| score < 0}.count).to_f)/ (moodiness.length).to_f * 100).round
   end
 
   def neutral_percentage
-    ((moodiness.select {|score| score == 0}.count).to_f)/ (moodiness.length).to_f * 100
+    (((moodiness.select {|score| score == 0}.count).to_f)/ (moodiness.length).to_f * 100).round
   end
 
   def moodiness

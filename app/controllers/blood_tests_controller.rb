@@ -5,7 +5,9 @@ class BloodTestsController < ApplicationController
   end
 
   def create
-    blood_test = SOMA.send_blood_test_result(params)
+    our_params = params
+    our_params[:blood_test][:app_user_id] = current_user.id
+    blood_test = SOMA.send_blood_test_result(our_params)
     redirect_to blood_test_path(blood_test['id'])
   end
 
@@ -34,35 +36,35 @@ class BloodTestsController < ApplicationController
 
   def index 
     prepare_blood_test_table
-    @blood_tests = SOMA.show_all
+    @blood_tests = SOMA.show_all(current_user.id)
   end
 
-  def results
-    render json: BloodTest.as_json(params[:name])
-  end
+  # def results
+  #   render json: BloodTest.as_json(params[:name])
+  # end
 
-  def legend
-    render json: BloodTest.legend_as_json
-  end
+  # def legend
+  #   render json: BloodTest.legend_as_json
+  # end
 
   private
 
-  def blood_test_params
-    params.require(:blood_test).permit(
-      :taken_on,
-      :hb,
-      :mcv,
-      :wbc,
-      :platelets,
-      :neutrophils,
-      :lymphocytes,
-      :alt,
-      :alk_phos,
-      :creatinine,
-      :esr,
-      :crp
-      )
-  end
+  # def blood_test_params
+  #   params.require(:blood_test).permit(
+  #     :taken_on,
+  #     :hb,
+  #     :mcv,
+  #     :wbc,
+  #     :platelets,
+  #     :neutrophils,
+  #     :lymphocytes,
+  #     :alt,
+  #     :alk_phos,
+  #     :creatinine,
+  #     :esr,
+  #     :crp
+  #     )
+  # end
 
   def set_headers
     @headers = @legend.map { |property_name, values| values["name"] }
