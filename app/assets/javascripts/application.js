@@ -18,3 +18,7 @@
 $(function(){
   $('#tabs').tabs();
 });
+
+window.setTimeout(function() {
+  $("ul.flash-messages").fadeOut();
+}, 2000);
