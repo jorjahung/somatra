@@ -14,15 +14,17 @@
 </div>
 
 <%= render 'moves' %>
-<article class="main-content dangerous-blood">
+<section class="diary">
   <h1>Diary</h1>
-  
+  <section>
     <% @dangerous_blood_tests_by_date.each do |result| %>
-      <h2><%= result['taken_on'] %></h2>
-      I had a <%= link_to "bloodtest", "/blood-tests/#{result['id']}" %> today.<br>
-      <% @methods.each do |method| %>
-        <%= "My #{method} result (#{result[method]}) is out of range." if result[method] != nil %>
-      <% end %></p>
-    <% end %>  
-
-</article>
+      <article>
+        <h2><%= result['taken_on'] %></h2>
+        <p>I had a <%= link_to "bloodtest", "/blood-tests/#{result['id']}" %> today.<br>
+        <% @methods.each do |method| %>
+          <%= "My #{method} result (#{result[method]}) is out of range." if result[method] != nil %>
+        <% end %></p>
+      </article>
+    <% end %>
+  </section>
+</section>

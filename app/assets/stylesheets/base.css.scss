@@ -149,6 +149,7 @@ h1 + .main-content {
 
 .moves {
   width: 600px;
+  margin-bottom: 15em;
 }
 
 .bar-chart {
@@ -228,5 +229,52 @@ form.main-content.devise-form {
   input[type=checkbox] + label {
     display: inline-block;
     width: auto;
+  }
+}
+
+.diary {
+  position: fixed;
+  height: 15em;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  text-align: left;
+  
+  background-color: #6cbbc9;
+  
+  h1 {
+    font-size: 1.5em;
+    margin-left: 12.75em;
+    margin-top: 0.75em;
+    margin-bottom: 0.75em;
+    color: #fff;
+  }
+  
+  section {
+    width: 100%;
+    height: 10em;
+    overflow-x: scroll;
+    white-space: nowrap;
+  }
+  
+  article {
+    background-color: #ebf6f8;
+    display: inline-block;
+    vertical-align: text-top;
+    max-width:  25em;
+    height: 10em;
+    padding: 1em;
+    
+    p {
+      white-space: normal;
+    }
+    
+    &:first-of-type {
+      margin-left: 19em;
+    }
+    
+    &:last-of-type {
+      margin-right: 1em;
+    }
   }
 }

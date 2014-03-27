@@ -18,3 +18,4 @@
 /immense-shelf-5808
 
 .env
+*.DS_Store
