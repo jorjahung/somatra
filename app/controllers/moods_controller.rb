@@ -2,7 +2,7 @@
 class MoodsController < ApplicationController
   def index
    @mood = Mood.new
-   @moods = Mood.all
+   @moods = Mood.order('created_at DESC').all
   end
 
   def create
@@ -10,7 +10,7 @@ class MoodsController < ApplicationController
    if @mood.save
       analyze_sentiment
       @mood = Mood.new
-      @moods = Mood.all
+      @moods = Mood.order('created_at DESC').all
       render "moods/index"
     else
       flash.now[:notice] = "Something went wrong and I didn't get your mood"

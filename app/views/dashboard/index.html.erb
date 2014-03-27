@@ -33,7 +33,9 @@
       <% if result.length > 2 %>
         <%= result.length == 3 ? "This was" : "These were" %> out of range:<br>
         <% @methods.each do |method| %>
-          <%= "#{@legend[method]["fullname"]}: #{result[method]}" if result[method] != nil %>
+          <% if result[method] != nil %>
+            <%= "#{@legend[method]["fullname"]}: #{result[method]}" %><br>
+          <% end %>
         <% end %>
       <% else %>
         Everything was within range.

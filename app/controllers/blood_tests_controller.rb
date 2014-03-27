@@ -6,11 +6,7 @@ class BloodTestsController < ApplicationController
 
   def create
     our_params = params
-    puts current_user
     our_params[:blood_test][:app_user_id] = current_user.id
-    puts "7" * 50
-    puts our_params
-    puts "8" * 50
     blood_test = SOMA.send_blood_test_result(our_params)
     redirect_to blood_test_path(blood_test['id'])
   end
@@ -40,16 +36,16 @@ class BloodTestsController < ApplicationController
 
   def index 
     prepare_blood_test_table
-    @blood_tests = SOMA.show_all
+    @blood_tests = SOMA.show_all(current_user.id)
   end
 
-  def results
-    render json: BloodTest.as_json(params[:name])
-  end
+  # def results
+  #   render json: BloodTest.as_json(params[:name])
+  # end
 
-  def legend
-    render json: BloodTest.legend_as_json
-  end
+  # def legend
+  #   render json: BloodTest.legend_as_json
+  # end
 
   private
 

@@ -24,6 +24,7 @@
           <li><%= link_to "See blood test results table", blood_tests_path %></li>
         </ul>
         <ul>
+          <li><%= link_to "See mood board", moods_path %></li>
           <li><a href="#">How are you feeling today?</a></li>
           <li class="mood-sidebar"> 
             <%= form_for Mood.new, html: {class: 'main-content'} do |form| %>
@@ -34,8 +35,8 @@
           </li>
           <li class="mood-sidebar"> 
             <%= form_for Mood.new, html: {class: 'main-content'} do |form| %>
-              <%= form.text_field :user_mood %>
-              <%= form.submit 'I hear ya, sistah' %>
+              <%= form.text_field :user_mood, placeholder: 'Tell me more...' %>
+              <%= form.submit 'OK' %>
             <% end %>
           </li>
         </ul>

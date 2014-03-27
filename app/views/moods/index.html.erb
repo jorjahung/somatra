@@ -1,17 +1,20 @@
-<h1>Mood Checker</h1>
+<h1>Mood Board</h1>
 
-<%= form_for @mood, html: {class: 'main-content'} do |form| %>
-<p></p>
-  <%= form.label :user_mood, 'How are you feeling today?' %>
-  <%= form.text_field :user_mood %>
-  <%= form.submit 'submit' %>
-<% end %>
-<aside>
-  <ul>
-  <% @moods.each do |mood| %>
-    <li>
-      On <%= mood.created_at %>, you were feeling: <%= mood.user_mood %>
-    </li>
-  <% end %>
-  </ul>
-</aside>
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Feeling</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @moods.each do |mood| %>
+      <tr>
+        <td><%= mood.created_at.strftime("%b %d %Y") %></td>
+        <td><%= mood.created_at.strftime("%R") %></td>
+        <td <%= class_for(mood) %>><%= mood.user_mood %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
