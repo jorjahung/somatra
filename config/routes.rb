@@ -6,7 +6,7 @@ Somatra::Application.routes.draw do
   get 'blood-tests/new' => 'blood_tests#new', as: :new_blood_test
   post 'blood-tests' => 'blood_tests#create'
   get 'blood-tests/legend'=> 'blood_tests#legend', as: :blood_tests_legend
-  get 'blood-tests/omnigraph' => 'blood_tests#omnigraph'
+  get 'blood-tests/omnigraph' => 'blood_tests#omnigraph', as: :omnigraph
   get 'blood-tests/:id' => 'blood_tests#show', as: :blood_test
   get 'blood-tests/:id/edit' => 'blood_tests#edit', as: :edit_blood_test
   patch 'blood-tests/:id' => 'blood_tests#update', as: :update_blood_test
