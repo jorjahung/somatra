@@ -2,7 +2,7 @@
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
 <div id="tabs" class="main-content">
-  <h1>Blood Tests Summary</h1>
+  <h2>Blood Tests Summary</h2>
   <ul>
   <% @headers.each_with_index do |header, i| %>
     <li><a href="#<%= @methods[i] %>"><%= header %></a></li>
@@ -14,39 +14,49 @@
     </div>
   <% end %>
 </div>
-<section class="main-content">
-  <h1>Moodiness</h1>
+
+<% unless Mood.all.empty?%>
+<section class="main-content moods">
+  <h2>Moodiness</h2>
   You are feeling positive <%= positive_percentage %>% of the time.
   You are feeling neutral <%= neutral_percentage %>% of the time.
   You are feeling negative <%= negative_percentage %>% of the time.
 </section>
+<% end %>
+
 <%= render 'moves' %>
 
 <section class="diary">
   <h1>Diary</h1>
   <section>
-    <% @dangerous_blood_tests_by_date.each do |result| %>
-    <article>
-      <h2><%= result['taken_on'] %></h2>
-      <p>
-      I had a <%= link_to "bloodtest", "/blood-tests/#{result['id']}" %> today.<br>
-      <% if result.length > 2 %>
-        <%= result.length == 3 ? "This was" : "These were" %> out of range:<br>
-        <% @methods.each do |method| %>
-          <% if result[method] != nil %>
-            <%= "#{@legend[method]["fullname"]}: #{result[method]}" %><br>
-          <% end %>
-        <% end %>
-      <% else %>
-        Everything was within range.
+    <% if @dangerous_blood_tests_by_date.empty? %>
+      <article>
+        <p>Add content to start the diary for your health.</p>
+      </article>
+    <% else %>
+      <% @dangerous_blood_tests_by_date.each do |result| %>
+        <article>
+          <h2><%= result['taken_on'] %></h2>
+          <p>
+            I had a <%= link_to "bloodtest", "/blood-tests/#{result['id']}" %> today.<br>
+            <% if result.length > 2 %>
+              <%= result.length == 3 ? "This was" : "These were" %> out of range:<br>
+              <% @methods.each do |method| %>
+                <% if result[method] != nil %>
+                  <%= "#{@legend[method]["fullname"]}: #{result[method]}" %><br>
+                <% end %>
+              <% end %>
+            <% else %>
+              Everything was within range.
+            <% end %>
+          </p>
+        </article>  
       <% end %>
-      </p>
-    </article>  
     <% end %>
   </section>
 </section>
 
 <% else %>
 <h1>Welcome to Somatra!</h1>
-<h2>To start your new healthy life, please <%= link_to "sign up", new_user_registration_path %>.</h2>
+<p class="main-content welcome-message">To start your new healthy life, please <%= link_to "sign up", new_user_registration_path %>.</p>
 <% end %>

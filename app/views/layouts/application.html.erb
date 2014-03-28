@@ -13,11 +13,7 @@
     <h1><%= link_to "Somatra", root_path %></h1>
     <% if current_user %>
       <img src="http://www.gravatar.com/avatar/<%= current_user.gravatar_hash %>?s=200" />
-      <% if @fullname %>
-        <p class="username"><%= @fullname %></p>
-      <% else %>
-        <p class="username"><%= current_user.username %></p>
-      <% end %>
+      <p class="username"><%= current_user.name %></p>
       <nav>
         <ul>
           <li><%= link_to "Enter new blood test results", new_blood_test_path %></li>
@@ -25,7 +21,7 @@
         </ul>
         <ul>
           <li><%= link_to "See mood board", moods_path %></li>
-          <li><a href="#">How are you feeling today?</a></li>
+          <li><a href="#" id="feeling-today">How are you feeling today?</a></li>
           <li class="mood-sidebar"> 
             <%= form_for Mood.new, html: {class: 'main-content'} do |form| %>
               <%= form.button ":)", name: "mood[user_mood]", value: "positive" %>

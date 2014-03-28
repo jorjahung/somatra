@@ -1,3 +1,20 @@
 // Place all the styles related to the moods controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+table.main-content {
+  td.positive {
+    background-color: rgba(0, 176, 0, 0.6);
+    color: #fff;
+  }
+
+  td.negative {
+    background-color: rgba(176, 0, 0, 0.6);
+    color: #fff;
+  }
+
+  td.neutral {
+    background-color: rgba(122, 134, 102, 0.6);
+    color: #fff;
+  }
+}

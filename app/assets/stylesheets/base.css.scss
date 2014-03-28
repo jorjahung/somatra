@@ -139,8 +139,18 @@ main {
   text-align: center;
   @include border-radius(1px);
 //  @include box-shadow(0, 0, 2px, rgba(51, 51, 51, 0.25));
-  margin: 5em auto;
+  margin: 3em auto 2em;
   padding: 1em 1em 1.5em;
+  max-width: 95%;
+
+  h2 {
+    text-align: left;
+  }
+}
+
+.welcome-message {
+  width: 50%;
+  padding: 1em;
 }
 
 h1 + .main-content {
@@ -148,8 +158,21 @@ h1 + .main-content {
 }
 
 .moves {
-  width: 600px;
+  width: 430px;
+  display: inline-block;
   margin-bottom: 15em;
+  vertical-align: text-top;
+  margin-top: 0;
+}
+
+.moods {
+  width: 430px;
+  height: 180px;
+  display: inline-block;
+  margin-bottom: 20em;
+  vertical-align: text-top;
+  margin-top: 0;
+  margin-right: 2em;
 }
 
 .bar-chart {

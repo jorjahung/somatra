@@ -14,4 +14,14 @@ class User < ActiveRecord::Base
   def username
     email.match(/^(.+)@/)[1].capitalize
   end
+
+  def name
+    begin
+      gravatar_profile = JSON.parse(open("http://en.gravatar.com/#{self.gravatar_hash}.json").readlines.join)
+      raise unless gravatar_profile
+      gravatar_profile["entry"][0]["displayName"]
+    rescue
+      username
+    end
+  end
 end
