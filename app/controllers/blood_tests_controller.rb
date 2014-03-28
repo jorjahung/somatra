@@ -83,31 +83,31 @@ class BloodTestsController < ApplicationController
   end
 
   def normalise_hb(value)
-    ((value * 8.9) - 72.35).to_i
+    ((value * 8.9) - 72.35).to_i if value
   end
 
   def normalise_mcv(value)
-    ((value * 2) - 150).to_i
+    ((value * 2) - 150).to_i if value
   end
 
   def normalise_wbc(value)
-    ((value * 5.7) + 7.2).to_i
+    ((value * 5.7) + 7.2).to_i if value
   end
 
   def normalise_platelets(value)
-    ((value * 0.13) + 11.8).to_i
+    ((value * 0.13) + 11.8).to_i if value
   end
 
   def normalise_neutrophils(value)
-    ((value * 8) + 10).to_i
+    ((value * 8) + 10).to_i if value
   end
 
   def normalise_lymphocytes(value)
-    ((value * 10.5) + 19.5).to_i
+    ((value * 10.5) + 19.5).to_i if value
   end
 
   def normalise_alt(value)
-    ((value * 1.3) + 17).to_i
+    ((value * 1.3) + 17).to_i if value
   end
 
   def normalise_alk_phos(value)
@@ -115,14 +115,14 @@ class BloodTestsController < ApplicationController
   end
 
   def normalise_creatinine(value)
-    ((value * 0.833) - 10).to_i
+    ((value * 0.833) - 10).to_i if value
   end
 
   def normalise_esr(value)
-    ((value * 1.538) + 30).to_i
+    ((value * 1.538) + 30).to_i if value
   end
 
   def normalise_crp(value)
-    ((value.to_i * 8) + 30).to_i
+    ((value.to_i * 8) + 30).to_i if value
   end
 end

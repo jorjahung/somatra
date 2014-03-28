@@ -23,14 +23,14 @@
         <ul>
           <li><%= link_to "See mood board", moods_path %></li>
           <li><a href="#" id="feeling-today">How are you feeling today?</a></li>
-          <li class="mood-sidebar"> 
+          <li class="mood-sidebar hidden"> 
             <%= form_for Mood.new, html: {class: 'main-content'} do |form| %>
               <%= form.button ":)", name: "mood[user_mood]", value: "positive" %>
               <%= form.button ":|", name: "mood[user_mood]", value: "neutral" %>
               <%= form.button ":(", name: "mood[user_mood]", value: "negative" %>
             <% end %>
           </li>
-          <li class="mood-sidebar"> 
+          <li class="mood-sidebar hidden"> 
             <%= form_for Mood.new, html: {class: 'main-content'} do |form| %>
               <%= form.text_field :user_mood, placeholder: 'Tell me more...' %>
               <%= form.submit 'OK' %>
@@ -54,5 +54,12 @@
     <%= render 'layouts/flash_messages' %>
     <%= yield %>
   </main>
+  <script type="text/javascript">
+    $(function() {
+      $('#feeling-today').click(function() {
+        $('.mood-sidebar').toggleClass('hidden');
+      });
+    });
+  </script>
 </body>
 </html>
