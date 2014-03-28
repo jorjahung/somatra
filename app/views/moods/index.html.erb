@@ -13,7 +13,7 @@
       <tr>
         <td><%= mood.created_at.strftime("%b %d %Y") %></td>
         <td><%= mood.created_at.strftime("%R") %></td>
-        <td <%= class_for(mood) %>><%= mood.user_mood %></td>
+        <td <%= class_for_mood(mood) %>><%= mood.user_mood %></td>
       </tr>
       <% end %>
   </tbody>
