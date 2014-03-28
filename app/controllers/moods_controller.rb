@@ -34,11 +34,11 @@ private
     Mood.last.update(stored_sentiment: tone)
 
     if tone == :negative   
-      flash.now[:notice] = "You said: #{your_mood}. We've stored this as a negative emotion."
+      flash.now[:notice] = "You said: #{your_mood}.<br>We've stored this as a negative emotion.".html_safe
     elsif tone == :neutral
-      flash.now[:notice] = "You said: #{your_mood}. We've stored this as a neutral emotion."
+      flash.now[:notice] = "You said: #{your_mood}.<br>We've stored this as a neutral emotion.".html_safe
     else   
-      flash.now[:notice] = "You said: #{your_mood}. We've stored this as a positive emotion."
+      flash.now[:notice] = "You said: #{your_mood}.<br>We've stored this as a positive emotion.".html_safe
     end
   end
 
