@@ -73,11 +73,11 @@ class BloodTestsController < ApplicationController
   end
 
   def prepare_blood_tests_for_omnigraph
-    blood_tests = SOMA.show_all
+    blood_tests = SOMA.show_all(current_user.id)
     @legend = SOMA.legend
     blood_tests.each do |test|
       @legend.each { |name, data| test[name]  = send("normalise_#{name}", test[name] ) }
-      test.delete_if {|k, v| k == "id" || k == "created_at" || k == "updated_at" }
+      test.delete_if {|k, v| k == "id" || k == "created_at" || k == "updated_at" || k == "user_id" }
     end
     @blood_tests = blood_tests
   end
