@@ -27,7 +27,7 @@ module BloodTestsHelper
   def within_range?(blood_test, method)
     if method == 'crp'
       return true if blood_test['crp'] =~ /^<(?:5|4|3|2|1)$/
-      return @ranges[method].include? value_for(blood_test, method) if blood_test['crp'] =~ /^\d+$/
+      return @ranges[method].include?(value_for(blood_test, method).to_i) if blood_test['crp'] =~ /^\d+$/
       return false
     else
       @ranges[method].include? value_for(blood_test, method)
