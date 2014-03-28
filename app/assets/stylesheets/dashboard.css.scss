@@ -90,3 +90,26 @@ g.test:hover {
     }
   }
 }
+
+.moods {
+  p {
+    width: 55%;
+    display: inline-block;
+    vertical-align: text-top;
+  }
+
+  svg {
+    width: 30%;
+    margin-top: -20px;
+    display: inline-block;
+    vertical-align: text-top;
+  }
+}
+
+g.slice:hover text.pie-label {
+  display: block;
+}
+
+text.pie-label {
+  display: none;
+}

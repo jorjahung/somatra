@@ -15,15 +15,7 @@
   <% end %>
 </div>
 
-<% unless Mood.all.empty?%>
-<section class="main-content moods">
-  <h2>Moodiness</h2>
-  You are feeling positive <%= positive_percentage %>% of the time.
-  You are feeling neutral <%= neutral_percentage %>% of the time.
-  You are feeling negative <%= negative_percentage %>% of the time.
-</section>
-<% end %>
-
+<%= render 'moods' %>
 <%= render 'moves' %>
 
 <section class="diary">
