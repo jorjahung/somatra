@@ -1,5 +1,5 @@
 <h1>New Blood Test</h1>
-<%= form_for @blood_test, html: {class: 'main-content'}, :authenticity_token => false do |form| %>
+<%= form_for @blood_test, html: {class: 'main-content'} do |form| %>
   <%= form.label 'taken_on' %>
   <%= form.date_field :taken_on, required: true %>
   <p></p>
@@ -39,3 +39,64 @@
 
   <%= form.submit 'submit' %>
 <% end %>
+
+<div id="microphone"></div>
+  <pre id="result"></pre>
+  <div id="info"></div>
+  <%= javascript_include_tag "microphone" %>
+
+  <script>
+    var mic = new Wit.Microphone(document.getElementById("microphone"));
+    var info = function (msg) {
+      document.getElementById("info").innerHTML = msg;
+    };
+    mic.onready = function () {
+      info("Microphone is ready to record");
+    };
+    mic.onaudiostart = function () {
+      info("Recording started");
+    };
+    mic.onaudioend = function () {
+      info("Recording stopped, processing started");
+    };
+    mic.onerror = function (err) {
+      info("Error: " + err);
+    };
+    mic.onresult = function (intent, entities) {
+      var r = kv("intent", intent);
+
+      for (var k in entities) {
+        var e = entities[k];
+        if (!(e instanceof Array)) {
+          r += kv(k, e.value);
+          console.log("here");
+          console.log(e.value);
+          if (window.times == undefined) {
+            window.value = e.value;
+            window.times = 'yeah';
+          } else {
+            var inpt = "#blood_test_" + window.value;
+            console.log(inpt);
+            $(inpt).val(e.value);
+            window.times = undefined;
+          }
+        } else {
+          for (var i = 0; i < e.length; i++) {
+            r += kv(k, e[i].value);
+          }
+        }
+      }
+    };
+    mic.connect('5ZVVUV3RFDOS7BYJUWYFOLU7EJLTVYHO');
+    // mic.start();
+    // mic.stop();
+
+    function kv (k, v) {
+      if (toString.call(v) !== "[object String]") {
+        v = JSON.stringify(v);
+        console.log(v);
+      }
+      console.log(k + "=" + v + "\n");
+    }
+
+  </script>

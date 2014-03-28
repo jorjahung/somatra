@@ -5,16 +5,14 @@ class DashboardController < ApplicationController
   def index
     if current_user
       check_for_moves_auth
-      set_moves_data if current_user.moves_auth_token
-      gravatar_profile = JSON.parse(open("http://en.gravatar.com/#{current_user.gravatar_hash}.json").readlines.join)
-      @fullname = gravatar_profile["entry"][0]["displayName"]
+      set_moves_data if current_user.moves_auth_token  
+      @legend = SOMA.legend
+      set_headers
+      set_methods
+      set_ranges
+      set_blood_tests
+      set_dangerous_blood_tests_by_date
     end
-
-    @legend = SOMA.legend
-    set_headers
-    set_methods
-    set_ranges
-    set_blood_tests
   end
 
   def moves_callback
@@ -46,8 +44,12 @@ class DashboardController < ApplicationController
 
   def set_blood_tests
     @blood_tests =  @legend.inject({}) do |hash, (property_name, values)| 
-      hash.merge({ property_name => SOMA.show_results_for(property_name).body })
+      hash.merge({ property_name => SOMA.show_results_for(current_user.id, property_name).body })
     end
+  end
+
+  def set_dangerous_blood_tests_by_date
+    @dangerous_blood_tests_by_date =  SOMA.show_dangerous_results(current_user.id)
   end
 
   def moves_client
@@ -91,4 +93,5 @@ class DashboardController < ApplicationController
   def access_token
     OAuth2::AccessToken.new(moves_client, current_user.moves_auth_token, :refresh_token => session[:refresh_token])
   end
+
 end

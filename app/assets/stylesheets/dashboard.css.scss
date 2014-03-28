@@ -10,12 +10,16 @@
 
 path.safe {
     stroke:none;
-    fill:rgba(0, 217, 50, 0.4);
+    fill: rgba(14, 163, 208, 0.25);
 }
 
 path.dataline {
-    stroke:red;
-    fill:none;
+  stroke: darken($main-color, 10%);
+  fill:none;
+}
+
+circle.data-point {
+  fill: darken($main-color, 10%);
 }
 
 div.tooltip {   
@@ -25,7 +29,7 @@ div.tooltip {
   min-height: 30px;                 
   padding: 0.5em;             
   font: 0.75em sans-serif;        
-  background: lightsteelblue;
+  background: darken($main-color, 30%);
   color: #fff;
   border: 0px;      
   @include border-radiuses(10px, 10px, 10px, 0);           
@@ -36,5 +40,29 @@ g.test:hover {
   text.hidden {
     display: block;
     font-size: 1.5em;
+  }
+}
+
+.mood-sidebar {
+  form.main-content {
+    width: 15em;
+    margin: .2em auto;
+    padding: .22em 0 1px;
+
+    label {
+      text-align: center;
+      width: 100%;
+    }
+
+    input {
+      margin-top: .5em;
+      width: 80%;
+    }
+
+    input[type=submit]{
+      width: auto;
+      margin: .3em auto;
+      padding: 0.5em 0.5em; 
+    }
   }
 }

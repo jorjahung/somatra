@@ -10,6 +10,7 @@ gem 'pg'
 
 # Authentication
 gem 'devise'
+gem 'sentimental'
 gem 'oauth2'
 
 # Use SCSS for stylesheets
@@ -47,7 +48,7 @@ group :development, :test do
 end
 
 group :test do 
-  gem 'webmock'
+  # gem 'webmock'
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

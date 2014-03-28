@@ -15,16 +15,20 @@ class Soma < Struct.new :base_uri, :token
     get(:"/legend")
   end
 
-  def show_all
-    get(:".json")
+  def show_all(user_id)
+    get(:"/users/#{user_id}")
   end
 
   def show(id)
     get(:"/#{id}.json")
   end
 
-  def show_results_for(test)
-    get(:"/results/#{test}")
+  def show_results_for(user_id, test)
+    get(:"/users/#{user_id}/#{test}")
+  end
+
+  def show_dangerous_results(user_id)
+    get(:"/users/#{user_id}/dangerous-results")
   end
 
   def send_blood_test_result(body_params)
