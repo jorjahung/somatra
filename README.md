@@ -20,5 +20,5 @@ Using D3.js and Ruby, we have created graphs that analyzes blood test data and h
 * Moves API
 * jQuery
 
-**Created with: [Megan Folsom](https://github.com/mfolsom), [James Hunter](https://github.com/NotTheUsual), [Makis Otman](https://github.com/Maikon)
+**Created with: [Megan Folsom](https://github.com/mfolsom), [James Hunter](https://github.com/NotTheUsual), [Makis Otman](https://github.com/Maikon)**
 
