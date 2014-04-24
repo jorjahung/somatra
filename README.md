@@ -22,3 +22,14 @@ Using D3.js and Ruby, we have created graphs that analyzes blood test data and h
 
 **Created with: [Megan Folsom](https://github.com/mfolsom), [James Hunter](https://github.com/NotTheUsual), [Makis Otman](https://github.com/Maikon)**
 
+####Dashboard:
+![alt text](https://raw.githubusercontent.com/jorjahung/somatra/master/screenshot2.png "somatra")
+
+####Result analysis:
+![alt text](https://raw.githubusercontent.com/jorjahung/somatra/master/screenshot1.png "somatra")
+
+####Mood board:
+![alt text](https://raw.githubusercontent.com/jorjahung/somatra/master/screenshot3.png "somatra")
+
+####Results table:
+![alt text](https://raw.githubusercontent.com/jorjahung/somatra/master/screenshot4.png "somatra")
